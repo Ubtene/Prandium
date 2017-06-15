@@ -4,9 +4,30 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var unirest = require("unirest");
+const yelp = require('yelp-fusion');
 
 // // Require History Schema
 // var History = require("./models/History");
+
+const clientId = 'pbRwg0shy1Zy_gUqWLpiYQ';
+const clientSecret = '499HGjfOQVwIUWD9ys11menFEA8Ytu77zNrjRCVJ0qYHUQTdpfqdDKNaR7QDYNPy';
+
+const searchRequest = {
+  term:'vegan',
+  location: 'san francisco, ca'
+};
+
+yelp.accessToken(clientId, clientSecret).then(response => {
+  const client = yelp.client(response.jsonBody.access_token);
+
+  client.search(searchRequest).then(response => {
+    const firstResult = response.jsonBody.businesses[0];
+    const prettyJson = JSON.stringify(firstResult, null, 4);
+    console.log(prettyJson);
+  });
+}).catch(e => {
+  console.log(e);
+});
 
 // Create Instance of Express
 var app = express();
