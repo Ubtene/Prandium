@@ -41,23 +41,20 @@ class Query extends React.Component {
   
 
   
-  <div className="panel panel-default">
+  <div className="panel panel-default" id='form'>
         <div className="panel-heading">
-          <h1 className="panel-title text-center"><strong>PRADIUM</strong></h1>
+          <h1 className="panel-title text-center"><strong>Sign Up</strong></h1>
         </div>
         <div className="panel-body text-center">
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <h4>
-                <strong>SIGN UP</strong>
-              </h4>
 
               {/*
                 Note how each of the form elements has an id that matches the state.
                 This is not necessary but it is convenient.
                 Also note how each has an onChange event associated with our handleChange event.
               */}
-              <h4> Please choose a login name: </h4>
+              <h4><strong> Please enter a UserName </strong> </h4>
               <input
                 value={this.state.login}
                 type="text"
@@ -92,7 +89,11 @@ class Query extends React.Component {
                 required
               />
               <br />
-              Meal type Preference Option
+              <h4>
+              <strong>
+              Meal Select a Preference
+              </strong>
+              </h4>
               <br/>
               <select 
               name="preferences"

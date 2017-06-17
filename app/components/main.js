@@ -3,7 +3,7 @@ const React = require('react');
 
 // Here we include all of the sub-components
 const Userform = require('./children/Userform.js');
-
+const Header = require('./children/Header.js')
 // Helper for making AJAX requests to our API
 
 // Creating the Main component
@@ -14,6 +14,7 @@ var Main = React.createClass({
   render: function() {
     return (
       <div className="container">
+      <Header />
       <Userform />
       </div>
     );

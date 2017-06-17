@@ -1,0 +1,23 @@
+body {
+	background-color: linen;
+	background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLMaS0KIs5E8cQ_OKZErSPr9N72R1de3J5L8CMWxlQ2hqcZZLCg);
+	margin: 0 auto;
+	background-size: 100%;
+}
+
+#form {
+	background-color: coral;
+
+}
+
+#header {
+	background-image: url(https://www.freshologize.ca/wp-content/uploads/2015/06/meal-plan-bg.jpg?id=1772);
+	background-size: 100%;
+	color: coral;
+	text-shadow: 5px 5px 10px black;
+	text-align: center;
+}
+
+select {
+	width: 100%;
+}
