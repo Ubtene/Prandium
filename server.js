@@ -5,8 +5,8 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var unirest = require("unirest");
 
-// // Require History Schema
-// var History = require("./models/History");
+// // Require Form Schema
+var Form = require("./models/Form.js");
 
 // Create Instance of Express
 var app = express();
@@ -20,40 +20,62 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-// app.use(express.static("./public"));
+app.use(express.static("./public"));
 
 // -------------------------------------------------
 
 // MongoDB Configuration configuration (Change this URL to your own DB)
-// mongoose.connect("mongodb://admin:codingrocks@ds023664.mlab.com:23664/reactlocate");
-// var db = mongoose.connection;
+mongoose.connect("mongodb://localhost/testingproject");
+var db = mongoose.connection;
 
-// db.on("error", function(err) {
-//   console.log("Mongoose Error: ", err);
-// });
+db.on("error", function(err) {
+  console.log("Mongoose Error: ", err);
+});
 
-// db.once("open", function() {
-//   console.log("Mongoose connection successful.");
-// });
+db.once("open", function() {
+  console.log("Mongoose connection successful.");
+});
 
 // -------------------------------------------------
 
 // Main "/" Route. This will redirect the user to our rendered React application
+
 app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/public/index.html");
+});
+
+
+app.get("/api", function(req, res) {
 
 unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/videos/search?includeingredients=chicken&avacado&maxLength=999&minLength=0&number=10&offset=0&query=quesadilla")
 .header("X-Mashape-Key", "RdXEu67LNZmshdxsrbAGe3gh9fAKp1VdlhxjsnnRI93ldi2bTU")
 .header("Accept", "application/json")
 .end(function (result) {
   console.log(result.status, result.headers, result.body);
+})
+})
+
+app.post("/", function(req, res) {
+  // console.log(0"BODY: " + req.body.location);
+  console.log('hi');
+  console.log(req);
+  
+  Form.create({
+    login: req.body.login,
+    password: req.body.pword,
+    email: req.body.email,
+    preferences: req.body.preference
+  }, function(err) {
+    if (err) {  
+      console.log(err);
+    }
+    else {
+      res.send("Saved Search");
+    }
+  })
 });
 
 
-app.get("/t", function(req,res){
-
-});
-
-});
 
 // // This is the route we will send GET requests to retrieve our most recent search data.
 // // We will call this route the moment our page gets rendered
