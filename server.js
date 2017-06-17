@@ -19,18 +19,7 @@ const searchRequest = {
   location: 'san francisco, ca'
   
 };
-// Yelp response
-yelp.accessToken(clientId, clientSecret).then(response => {
-  const client = yelp.client(response.jsonBody.access_token);
 
-  client.search(searchRequest).then(response => {
-    const firstResult = response.jsonBody.businesses[0];
-    const prettyJson = JSON.stringify(firstResult, null, 4);
-    console.log(prettyJson);
-  });
-}).catch(e => {
-  console.log(e);
-});
 //Ending of the Yelp stuff.
 
 // Create Instance of Express
@@ -75,6 +64,19 @@ unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/vid
 
 
 app.get("/t", function(req,res){
+
+        // Yelp response
+      yelp.accessToken(clientId, clientSecret).then(response => {
+        const client = yelp.client(response.jsonBody.access_token);
+
+        client.search(searchRequest).then(response => {
+          const firstResult = response.jsonBody.businesses[0];
+          const prettyJson = JSON.stringify(firstResult, null, 4);
+          console.log(prettyJson);
+        });
+      }).catch(e => {
+        console.log(e);
+});
 
 });
 
