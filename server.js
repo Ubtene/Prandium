@@ -9,14 +9,17 @@ const yelp = require('yelp-fusion');
 // // Require History Schema
 // var History = require("./models/History");
 
+
+//My Yelp Access Token
 const clientId = 'pbRwg0shy1Zy_gUqWLpiYQ';
 const clientSecret = '499HGjfOQVwIUWD9ys11menFEA8Ytu77zNrjRCVJ0qYHUQTdpfqdDKNaR7QDYNPy';
-
+//Yelp Search Request
 const searchRequest = {
   term:'vegan',
   location: 'san francisco, ca'
+  
 };
-
+// Yelp response
 yelp.accessToken(clientId, clientSecret).then(response => {
   const client = yelp.client(response.jsonBody.access_token);
 
@@ -28,6 +31,7 @@ yelp.accessToken(clientId, clientSecret).then(response => {
 }).catch(e => {
   console.log(e);
 });
+//Ending of the Yelp stuff.
 
 // Create Instance of Express
 var app = express();
