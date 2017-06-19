@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Prandium</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1> Please fill out this form to begin using Prandium </h1>
+    <form>
+        <input type=text name="email"></input>
+        <input type="text" name="generalRestrictions"></input>
+        <input type="text" name="particularRestrictions"></input>
+        <div id="checks"> 
+        <input type="checkbox"  name="monday"> Monday </input>
+        <input type="checkbox" name="tuesday"> Tuesday </input>
+        <input type="checkbox" name="wednesday"> Wednesday </input>
+        <input type="checkbox" name="thursday"> Thursday </input>
+        <input type="checkbox" name="friday">Friday </input>
+        </div>
+        <input type="checkbox" name="particularRestrictions"></input>
+        <input type="hidden" name="user" value="">
+        <button id="button">Go</button>
+    </form>
+
+</body>
+
+<script type="text/javascript">
+
+$(document).ready( function () {
+
+
+$.ajax({
+
+    type: "GET",
+    url: "/api/user",
+    success: function(data) {
+
+        var user = data;
+        $("[name=user]").val(user);
+
+    },
+
+
+});
+
+
+$("#button").on("click", function() {
+
+      var  daysArray = [];
+
+
+        $("#checks :checked").each(function () {
+
+            daysArray.push($(this).val());
+
+        });
+
+        var user = $("[name=user]").val();
+
+        var generalRestrictionsq = $("[name=generalRestrictions]").val();
+
+        var particularRestrictions = $("[name=particularRestrictions]").val();
+       var email = $("[name=email").val();
+
+        var obj = {
+
+            user: user,
+            generalRestrictions: generalRestrictions,
+            particularRestrictions: particularRestrictions,
+            email: email,
+            days: daysArray
+
+        }
+
+        $("[name=user").val("");
+        $("[name=user").val("");
+        $("[name=user").val("");
+
+        $.ajax({
+
+            type: "POST",
+            data: obj,
+            url: "/api/userdatabase"
+
+        });  
+
+
+         window.location.href = "/main" + user;
+
+
+});
+
+});
+
+
+</script>
+
+</html>

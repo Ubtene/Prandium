@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Prandium</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>Prandium's main page</h1>
+</body>
+
+<script type="text/javascript">
+$(document).ready( function () {
+
+        $.ajax(
+
+            {
+
+                type: "Post",
+                url: "/api/mealplan",
+                success: function(data) {
+
+
+                    var mealArray = data;
+
+                    for (i = 0; i < mealArray.length; i++)
+
+                        console.log(mealArray[i].meals);
+                }
+
+
+           });
+
+        });
+</script>
+
+</html>
