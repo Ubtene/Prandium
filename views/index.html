@@ -48,6 +48,31 @@ $.ajax({
 
 $("#button").on("click", function() {
 
+
+        //  var geocoder = new google.maps.Geocoder;
+
+        //         if (navigator.geolocation) {
+        //             navigator.geolocation.getCurrentPosition(function (position) {
+        //                 var pos = {
+        //                     lat: position.coords.latitude,
+        //                     lng: position.coords.longitude
+        //                 };
+        //                 geocoder.geocode({
+        //                     'location': pos
+        //                 }, function (results, status) {
+        //                             console.log(results);
+
+        //                             var geo =  $("<div>");
+                                    
+        //                             geo.addClass('geobutton');
+
+        //                             geo.html(results[7].formatted_address);
+
+        //                             $('#passport-div').append(geo);
+        //                 });
+        //             });
+        //         };
+
       var  daysArray = [];
 
 
@@ -59,16 +84,16 @@ $("#button").on("click", function() {
 
         var user = $("[name=user]").val();
 
-        var generalRestrictionsq = $("[name=generalRestrictions]").val();
+        var preferences = $("[name=generalRestrictions]").val();
 
-        var particularRestrictions = $("[name=particularRestrictions]").val();
+        var restrictions = $("[name=particularRestrictions]").val();
        var email = $("[name=email").val();
 
         var obj = {
 
             user: user,
-            generalRestrictions: generalRestrictions,
-            particularRestrictions: particularRestrictions,
+            preferences: preferences,
+            restrictions: restrictions,
             email: email,
             days: daysArray
 
@@ -87,7 +112,25 @@ $("#button").on("click", function() {
         });  
 
 
-         window.location.href = "/main" + user;
+              $.ajax({
+
+                type: "Post",
+                url: "/api/mealplan",
+                success: function(data) {
+
+
+                    var mealArray = data;
+
+                 mealArray.map(function () {
+
+                  
+
+
+
+                 });
+
+
+           });
 
 
 });

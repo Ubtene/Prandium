@@ -17,24 +17,7 @@
 
 $(document).ready( function () {
 
-        $.ajax(
-
-            {
-
-                type: "Post",
-                url: "/api/mealplan",
-                success: function(data) {
-
-
-                    var mealArray = data;
-
-                    for (i = 0; i < mealArray.length; i++)
-
-                        console.log(mealArray[i].meals);
-                }
-
-
-           });
+  
 
         });
 </script>

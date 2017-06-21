@@ -5,123 +5,115 @@ var userMeals = require("../models/Users.js");
 var express = require("express");
 var app = express();
 
+module.exports = function (app) {
 
-module.exports = function(app) {
-
-
-        app.get("/", function(req, res) {
+    app.get("/", function (req, res) {
 
             res.sendFile(path.resolve(__dirname + "/../views/signup.html"));
         });
 
+    app.get("/main", function (req, res) {
 
-        app.get("/main", function(req, res) {
+        res.sendFile(path.resolve(__dirname + '/../views/index.html'));
 
-            res.sendFile(path.resolve(__dirname + '/../views/index.html'));
+    });
 
-        });
+    app.post("/api/userdatabase", function (req, res) {
 
-        app.post("/api/userdatabase", function(req, res) {
+        var userID = req.body.user
+        var preferences = req.body.preferences
+        var restrictions = req.body.restrictions
+        var email = req.body.email
+        var password = req.body.password
+        var days = req.body.days
 
+        // These code snippets use an open-source library. http://unirest.io/nodejs
+        unirest
+            .get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/random?limitL" +
+                "icense=false&number=100&tags=" + grestrictons + "%2C" + prestrictions)
+            .header("X-Mashape-Key", "RdXEu67LNZmshdxsrbAGe3gh9fAKp1VdlhxjsnnRI93ldi2bTU")
+            .header("Accept", "application/json")
+            .end(function (result) {
 
-                var userID = req.body.user
-                var grestrictions = req.body.generalRestrictions
-                var prestrictions = req.body.particularRestrictions
-                var email = req.body.email
-                var days = req.body.days
+                console.log('got here');
 
+                console.log(result);
 
-                // These code snippets use an open-source library. http://unirest.io/nodejs
-                unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/random?limitLicense=false&number=100&tags=" + grestrictons + "%2C" + prestrictions)
-                    .header("X-Mashape-Key", "RdXEu67LNZmshdxsrbAGe3gh9fAKp1VdlhxjsnnRI93ldi2bTU")
-                    .header("Accept", "application/json")
-                    .end(function(result) {
+                var mealPlanArray = [];
 
-                            console.log('got here');
+                for (i = 0; i < 7; i++) {
 
-                            console.log(result);
+                    mealPlanArray.push(result.body.recipes[i]);
+                }
 
-                            var mealPlanArray = [];
+                console.log("saved to array");
 
-                            for (i = 0; i < 7; i++) {
+                // MongoDB configuration (Change this URL to your own DB)
+                mongoose.Promise = global.Promise;
+                mongoose.connect("mongodb://127.0.0.1:27017/Prandium");
+                var db = mongoose.connection;
 
-                                mealPlanArray.push(result.body.recipes[i]);
-                            }
+                db.on("error", function (err) {
+                    console.log("Mongoose Error: ", err);
+                });
 
-                            console.log("saved to array");
+                db.once("open", function () {
+                    console.log("Mongoose connection successful.");
+                });
 
-                            // MongoDB configuration (Change this URL to your own DB)
-                            mongoose.Promise = global.Promise;
-                            mongoose.connect("mongodb://127.0.0.1:27017/Prandium");
-                            var db = mongoose.connection;
+                userMeals.create({
+                    userID: userID,
+                    userEmail: email,
+                    password: password,
+                    meals: mealPlanArray,
+                    preferences: preferences,
+                    restrictions: restrictions,
+                    days: days,
+                    date: Date.now()
+                }, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
 
-                            db.on("error", function(err) {
-                                console.log("Mongoose Error: ", err);
-                            });
+                        console.log("saved your meals");
 
-                            db.once("open", function() {
-                                console.log("Mongoose connection successful.");
-                            });
-
-                            userMeals.create({
-                                    userID: userID,
-                                    userEmail: email,
-                                    meals: mealPlanArray,
-                                    grestrictions: grestrictions,
-                                    prestrictions: prestrictions,
-                                    days: days,
-                                    date: Date.now()
-                                }, function(err) {
-                                    if (err) {
-                                        console.log(err);
-                                    } else {
-
-                                        console.log("saved your meals");
-
-                                    }
-
-
-                                    $.post("/api/mealpan", function(res, req) {
-
-
-                                            var mealsByDay = {
-
-                                                meals: days
-                                            }
-
-                                            userMeals.find({
-                                                userID: userID
-                                            }, function(err, data) {
-
-                                                for (i = 0; i < days.length; i++) {
-
-                                                    userMeals.find({
-                                                        userID: userID
-                                                    }).limit(10).exec(function(err, data) {
-
-                                                        var mongoObj = data[0];
-
-                                                        days[i].meals = mongoObj;
-
-
-                                                    });
-
-                                                    res.send(mealByDay)
-
-                                                };
-
-                                                // res.send(mongoObj);
-
-                                            });
-                                        });
-
-                                    });
-
-
-                                //end of spoonacular query      
-                            });
-
-                        //end of post    
+                        }
                     });
 
-        };
+                    $.post("/api/mealpan", function (res, req) {
+
+                            var mealsByDay = {
+
+                                mealsForDays: days
+                            }
+
+                            userMeals.find({
+                                userID: userID
+                            }, function (err, data) {
+
+                                for (i = 0; i < days.length; i++) {
+
+                                    userMeals
+                                        .find({userID: userID})
+                                        .limit(10)
+                                        .exec(function (err, data) {
+
+                                            var mongoObj = data[0];
+
+                                            days[i].meals = mongoObj;
+
+                                        });
+
+                                    res.send(mealByDay);
+                                };
+                            });
+                        });
+
+                });
+
+                //end of spoonacular query
+            });
+
+        //end of post
+
+};
