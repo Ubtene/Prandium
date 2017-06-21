@@ -1,6 +1,12 @@
 var React = require("react");
 var helpers = require('./../utils/helpers.js');
-
+var Header = require('./Header');
+var NavLink = require('react-router-dom').NavLink;
+var ReactRouter = require('react-router-dom');
+var Router = ReactRouter.BrowserRouter;
+var Route = ReactRouter.Route;
+var Switch = ReactRouter.Switch;
+var browserHistory = ReactRouter.browserHistory;
 
 class YelpR extends React.Component {
   constructor(props) {
@@ -18,7 +24,7 @@ class YelpR extends React.Component {
          
         console.log(this.state);
         helpers.postYelp(this.state.zipcode, this.state.type);
-
+        browserHistory.push("/")
         // this.setState({newterm: "", startDate: "", endDate: ""})
 
   }
@@ -37,7 +43,8 @@ class YelpR extends React.Component {
 
   render() {
     return (
-
+      <div className="container" id="rsContainer">
+      {/*<Header /> Had header here now moving it to the Routes*/}
       <div className="panel panel-default" id='form'>
         <div className="panel-heading">
           <h1 className="panel-title text-center"><strong>Search Local Restaurants</strong></h1>
@@ -49,9 +56,22 @@ class YelpR extends React.Component {
             
 
               <input
-                value={this.state.zipcode}
+                value={this.state.type}
+                placeholder="Find e.g. Italian, Mexican, Japanese"
                 type="text"
-                className="form-control text-center"
+                className="form-control text-center restaurantSearch"
+                id="type"
+                name="type"
+                onChange={this.handleChange}
+                required
+              />
+
+
+              <input
+                value={this.state.zipcode}
+                placeholder="Near zipcode"
+                type="text"
+                className="form-control text-center restaurantSearch"
                 id="zipcode"
                 name="zipcode"
                 onChange={this.handleChange}
@@ -60,26 +80,20 @@ class YelpR extends React.Component {
               />
 
 
-              <input
-                value={this.state.type}
-                type="text"
-                className="form-control text-center"
-                id="type"
-                name="type"
-                onChange={this.handleChange}
-                required
-              />
-              <input
+                  <input
                   value="Submit"
                   className="btn"
                   type="submit"
-              />
+                  to='/header'
+                  />
+
 
 
             </div>
           </form> 
       </div>   
     </div>
+  </div>
        
     );
   }

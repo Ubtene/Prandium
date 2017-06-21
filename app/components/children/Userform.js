@@ -1,11 +1,16 @@
 const React = require('react');
 var helpers = require('./../utils/helpers.js');
-
+var NavLink = require('react-router-dom').NavLink;
+var ReactRouter = require('react-router-dom');
+var Router = ReactRouter.BrowserRouter;
+var Route = ReactRouter.Route;
+var Switch = ReactRouter.Switch;
+var Redirect = Router.Redirect;
 
 
 // import helpers from './../utils/helpers.js';
 var names = ["peanut", "dairy", "wheat", "pork", "soy", "fish", "shellfish"];
-var options
+
 class Query extends React.Component {
   constructor(props){
     super(props);
@@ -14,7 +19,7 @@ class Query extends React.Component {
       login: "",
       email: '',
       password: "",
-      preferences: '',
+      preferences: "",
       peanut: false,
       dairy: false,
       wheat: false,
@@ -23,6 +28,7 @@ class Query extends React.Component {
       fish: false,
       shellfish: false,
       restrictions: []
+    
 
 
   };
@@ -33,6 +39,7 @@ class Query extends React.Component {
   }
 
   handleInputChange(event) {
+
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -60,8 +67,8 @@ class Query extends React.Component {
   handleSubmit(event) {
         event.preventDefault(); 
         var options = ["peanut", "dairy", "wheat", "pork", "soy", "fish", "shellfish"];
-        var term = [this.state.peanut, this.state.dairy, this.state.wheat, this.state.pork, this.state.soy, this.state.fish, this.state.shellfish];
         var restrictions = this.state.restrictions;
+        var term = [this.state.peanut, this.state.dairy, this.state.wheat, this.state.pork, this.state.soy, this.state.fish, this.state.shellfish];
 
         for(var i = 0; i < options.length; i++){
             if(term[i]){
@@ -71,9 +78,21 @@ class Query extends React.Component {
 
         this.setState({restrictions: restrictions});
         helpers.postForm(this.state.login, this.state.email, this.state.password, this.state.preferences, this.state.restrictions);
-        console.log(this.state);
 
-
+        this.setState({
+      login: "",
+      email: '',
+      password: "",
+      preferences: '',
+      peanut: false,
+      dairy: false,
+      wheat: false,
+      pork: false,
+      soy: false,
+      fish: false,
+      shellfish: false,
+      restrictions: []
+        })
 
         }
 
@@ -153,7 +172,29 @@ class Query extends React.Component {
                 <fieldset>
     <legend>Dietary Restrictions</legend>
 
+              {names.map((name, index)=> {
 
+              this.handleInputChange = this.handleInputChange.bind(this);
+              var term = [this.state.peanut, this.state.dairy, this.state.wheat, this.state.pork, this.state.soy, this.state.fish, this.state.shellfish];
+              var states = ["Peanuts:", "Dairy:", "Wheat:", "Pork:", "Soy:", "Fish:", "Shellfish:"]
+              return (
+
+              <label
+              key={index}
+              >
+               {states[index]}
+                <input
+                  name={name}
+                  type="checkbox"
+                  checked={term[index]}
+                  onChange={this.handleInputChange} />
+              </label>
+
+
+              )
+              })}
+
+{/*
               <label>
                 Peanuts:
                 <input
@@ -227,7 +268,7 @@ class Query extends React.Component {
                   checked={this.state.shellfish}
                   onChange={this.handleInputChange} />
               </label>
-
+*/}
               </fieldset>
 
            <br/>
