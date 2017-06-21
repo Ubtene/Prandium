@@ -1,0 +1,75 @@
+body {
+	background-color: white;
+	/*background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLMaS0KIs5E8cQ_OKZErSPr9N72R1de3J5L8CMWxlQ2hqcZZLCg);*/
+	margin: 0 auto;
+	background-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	color: grey;
+	font-weight: normal;
+
+}
+	
+
+
+strong {
+	color: grey;
+}
+
+legend {
+	color: grey;
+}
+.container {
+	width: 50%;
+}
+
+#checkbox {
+	display: flex; flex-direction: row;
+
+/*display: inline-flex;*/
+}
+
+#form {
+	background-color: white;
+	/*background-color: gainsboro;*/
+	/*background-color: snow;*/
+}
+
+label {
+	margin-right: 3%;
+}
+#header {
+	background-image: url(https://www.freshologize.ca/wp-content/uploads/2015/06/meal-plan-bg.jpg?id=1772);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: coral;
+	color: red;
+
+	text-shadow: 5px 5px 10px black;
+	text-align: center;
+}
+
+select {
+	width: 100%;
+}
+
+#top {
+
+	width: 95%;
+}
+
+span {
+	float: left;
+}
+
+#loginTitle {
+	float: left;
+	color: blue;
+}
+
+.btn {
+	background-color: coral;
+	letter-spacing: 1.5px;
+	color: white;
+	border: 2px solid red;
+}

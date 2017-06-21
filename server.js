@@ -38,60 +38,24 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 // -------------------------------------------------
 
-// Main "/" Route. This will redirect the user to our rendered React application
-app.get("/", function(req, res) {
 
-unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/videos/search?includeingredients=chicken&avacado&maxLength=999&minLength=0&number=10&offset=0&query=quesadilla")
-.header("X-Mashape-Key", "RdXEu67LNZmshdxsrbAGe3gh9fAKp1VdlhxjsnnRI93ldi2bTU")
-.header("Accept", "application/json")
-.end(function (result) {
-  console.log(result.status, result.headers, result.body);
-});
+app.use(express.static("./public"));
 
+app.get("/", function(req,res){
 
-app.get("/t", function(req,res){
+	    res.sendFile(__dirname + "/public/index.html");
+})
 
-});
+app.post("/", function(req,res){
+console.log(req.body);
 
-});
+})
 
-// // This is the route we will send GET requests to retrieve our most recent search data.
-// // We will call this route the moment our page gets rendered
-// app.get("/api", function(req, res) {
+app.post('/yelp', function(req,res){
+	console.log(req.body);
 
-//   // We will find all the records, sort it in descending order, then limit the records to 5
-//   History.find({}).sort([
-//     ["date", "descending"]
-//   ]).limit(5).exec(function(err, doc) {
-//     if (err) {
-//       console.log(err);
-//     }
-//     else {
-//       res.send(doc);
-//     }
-//   });
-// });
+})
 
-// This is the route we will send POST requests to save each search.
-// app.post("/api", function(req, res) {
-//   console.log("BODY: " + req.body.location);
-
-//   // Here we'll save the location based on the JSON input.
-//   // We'll use Date.now() to always get the current date time
-//   History.create({
-//     location: req.body.location,
-//     date: Date.now()
-//   }, function(err) {
-//     if (err) {
-//       console.log(err);
-//     }
-//     else {
-//       res.send("Saved Search");
-//     }
-//   });
-// });
-
-// -------------------------------------------------
 
 // Listener
 app.listen(PORT, function() {
