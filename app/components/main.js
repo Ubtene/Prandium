@@ -1,8 +1,8 @@
 var React = require('react');
 const Userform = require('./children/Userform.js');
-const Header = require('./children/Header.js')
-const YelpR = require('./children/Yelpresults.js')
-
+const Header = require('./children/Header.js');
+const YelpR = require('./children/Yelpresults.js');
+import MealCalendar from './children/MealCalendar';
 class Main extends React.Component{
 
 
@@ -11,8 +11,9 @@ class Main extends React.Component{
     return (
       <div className="container">
       <Header />
-      <Userform />
       <YelpR />
+      <MealCalendar />
+      <Userform />
       </div>
     )
   }
