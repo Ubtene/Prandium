@@ -3,11 +3,13 @@ var session = require('express-session');
 var mongoose = require("mongoose");
 var userMeals = require("../models/Users.js");
 var express = require("express");
+var unirest = require("unirest");
 var app = express();
 
 module.exports = function (app) {
 
-    app.get("/", function (req, res) {
+    app
+        .get("/", function (req, res) {
 
             res.sendFile(path.resolve(__dirname + "/../views/signup.html"));
         });
@@ -27,10 +29,12 @@ module.exports = function (app) {
         var password = req.body.password
         var days = req.body.days
 
+        console.log("got to the backend");
+
         // These code snippets use an open-source library. http://unirest.io/nodejs
         unirest
             .get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/random?limitL" +
-                "icense=false&number=100&tags=" + grestrictons + "%2C" + prestrictions)
+                "icense=false&number=100&tags=" + preferences + "%2C" + restrictions)
             .header("X-Mashape-Key", "RdXEu67LNZmshdxsrbAGe3gh9fAKp1VdlhxjsnnRI93ldi2bTU")
             .header("Accept", "application/json")
             .end(function (result) {
@@ -77,43 +81,43 @@ module.exports = function (app) {
 
                         console.log("saved your meals");
 
-                        }
-                    });
-
-                    $.post("/api/mealpan", function (res, req) {
-
-                            var mealsByDay = {
-
-                                mealsForDays: days
-                            }
-
-                            userMeals.find({
-                                userID: userID
-                            }, function (err, data) {
-
-                                for (i = 0; i < days.length; i++) {
-
-                                    userMeals
-                                        .find({userID: userID})
-                                        .limit(10)
-                                        .exec(function (err, data) {
-
-                                            var mongoObj = data[0];
-
-                                            days[i].meals = mongoObj;
-
-                                        });
-
-                                    res.send(mealByDay);
-                                };
-                            });
-                        });
-
+                    }
                 });
 
-                //end of spoonacular query
+                // $.post("/api/mealpan", function (res, req) {
+
+                //     var mealsByDay = {
+
+                //         mealsForDays: days
+                //     }
+
+                //     userMeals.find({
+                //         userID: userID
+                //     }, function (err, data) {
+
+                //         for (i = 0; i < days.length; i++) {
+
+                //             userMeals
+                //                 .find({userID: userID})
+                //                 .limit(10)
+                //                 .exec(function (err, data) {
+
+                //                     var mongoObj = data[0];
+
+                //                     days[i].meals = mongoObj;
+
+                //                 });
+
+                //             // res.send(mealByDay);
+                //         };
+                //     });
+                // });
+
             });
 
-        //end of post
+        //end of spoonacular query
+    });
+
+    //end of post
 
 };
