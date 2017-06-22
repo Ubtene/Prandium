@@ -14,22 +14,24 @@ const week = [
 class MealCalendar extends React.Component {
     
     componentWillMount () {
-        this.selectedCheckboxes = new Set();
+        this.selectedCheckboxes = [];
   }
 
     constructor() {
     super();
 
-    const selectedCheckboxes = new Set();
+    const selectedCheckboxes = [];
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
+    this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
     
 
   toggleCheckbox (label) {
-    if (this.selectedCheckboxes.has(label)) {
-      this.selectedCheckboxes.delete(label);
+    if (this.selectedCheckboxes.includes(label)) {
+      let index = this.selectedCheckboxes.indexOf(label);
+      this.selectedCheckboxes.splice(index, 1);
     } else {
-      this.selectedCheckboxes.add(label);
+      this.selectedCheckboxes.push(label);
     }
   }
 
@@ -46,16 +48,22 @@ class MealCalendar extends React.Component {
       });
   }
 
-  handleClick (event) {
-      //do something
+  handleSubmitForm (event) {
+      event.preventDefault();
+
+      //******API CALL GOES HERE******
+      //...OR WE MAY HAVE TO SET UP THE 'ACTION' AND 'METHOD' ATTRIBUTES IN THE FORM ELEMENT ON LINE-62 BELOW 
+      alert(this.selectedCheckboxes);
   }
 
   render() {
     return (
         <div>
-            <form>
+            <form onSubmit = {this.handleSubmitForm}>
                 {this.createCheckboxes()}
-                <button onClick = {this.handleClick}>Click Me!</button>
+                <input 
+                    value='Get Meal Plan'
+                    type='submit'/>
             </form>
         </div>
     );
