@@ -18,7 +18,7 @@ function Nav() {
 			<NavLink activeClassName='active' to='/search'>Search</NavLink>
 		</li>
 		<li id="nav">
-			<NavLink activeClassName='active' to='/mealcalendar'>Calendar</NavLink>
+			<NavLink activeClassName='active' to='/mealcalendar'>Your Meal Plan</NavLink>
 		</li>
 
 

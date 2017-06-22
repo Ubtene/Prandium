@@ -59,6 +59,8 @@ class MealCalendar extends React.Component {
   render() {
     return (
         <div>
+            <h1>For What Days Do You Want Meals?</h1>
+            <h3>Check the boxes below</h3>
             <form onSubmit = {this.handleSubmitForm}>
                 {this.createCheckboxes()}
                 <input 
