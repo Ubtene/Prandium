@@ -13,7 +13,7 @@ class Checkbox extends React.Component {
       if (!checked) {
         this.setState({isChecked: true});
       } else {
-        this.setState({isChecked: !isChecked});
+        this.setState({isChecked: false});
       }
   }
 
