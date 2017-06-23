@@ -1,8 +1,5 @@
 var axios = require("axios");   
 
-
-
-
 var helper = {
 
 		//this form is sending user credentials to sign up
@@ -15,13 +12,16 @@ var helper = {
 	// this form is sending info for yelp search
 	postYelp(zipcode, restaurantType){
 		console.log('yelp');
-		return axios.post('/yelp', {yelp:{zipcode: zipcode, restaurantType: restaurantType}});
+		return axios.post('/yelp', {yelp:{zipcode: zipcode, restaurantType: restaurantType}});	
+	},
+
+	getYelp(zipcode, restaurantType){
+		return axios.get('/yelp', { params: {zipcode: zipcode, type: restaurantType}}).then(function(result){
+			console.log(result);
+			return(result);
+		})
 
 	}
-
-	
-
-
 
 };
 

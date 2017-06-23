@@ -1,7 +1,7 @@
 var React = require('react');
 const Userform = require('./children/Userform.js');
 const Header = require('./children/Header.js')
-const YelpR = require('./children/Yelpresults.js')
+const Yelp = require('./children/Yelp')
 
 class Main extends React.Component{
 
@@ -12,7 +12,7 @@ class Main extends React.Component{
       <div className="container">
       <Header />
       <Userform />
-      <YelpR />
+      <Yelp />
       </div>
     )
   }

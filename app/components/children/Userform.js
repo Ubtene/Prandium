@@ -6,15 +6,16 @@ var Router = ReactRouter.BrowserRouter;
 var Route = ReactRouter.Route;
 var Switch = ReactRouter.Switch;
 var Redirect = Router.Redirect;
-
-
-// import helpers from './../utils/helpers.js';
+var helpers = require('./../utils/helpers.js');
 var names = ["peanut", "dairy", "wheat", "pork", "soy", "fish", "shellfish"];
 
+
+
+
 class Query extends React.Component {
+
   constructor(props){
     super(props);
-    console.log(props);
     this.state = {
       login: "",
       email: '',
@@ -28,12 +29,9 @@ class Query extends React.Component {
       fish: false,
       shellfish: false,
       restrictions: []
-    
+  }
 
-
-  };
-  console.log(this.state);
-  this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -61,9 +59,9 @@ class Query extends React.Component {
          this.setState({
            [name]: value
          });
+  }
 
- 
-}
+
   handleSubmit(event) {
         event.preventDefault(); 
         var options = ["peanut", "dairy", "wheat", "pork", "soy", "fish", "shellfish"];
@@ -76,10 +74,10 @@ class Query extends React.Component {
             }
         }
 
-        this.setState({restrictions: restrictions});
-        helpers.postForm(this.state.login, this.state.email, this.state.password, this.state.preferences, this.state.restrictions);
+      this.setState({restrictions: restrictions});
+      helpers.postForm(this.state.login, this.state.email, this.state.password, this.state.preferences, this.state.restrictions);
 
-        this.setState({
+      this.setState({
       login: "",
       email: '',
       password: "",
@@ -93,15 +91,11 @@ class Query extends React.Component {
       shellfish: false,
       restrictions: []
         })
-
-        }
-
+  }
   render() {
-            return (  
-  
-  
+    return (  
 
-  <div className="panel panel-default" id='form'>
+    <div className="panel panel-default" id='form'>
 
         <div className="panel-body text-center">
           <form onSubmit={this.handleSubmit}>
@@ -114,7 +108,7 @@ class Query extends React.Component {
               <input
                 value={this.state.login}
                 type="text"
-                className="form-control text-center"
+                className="form-control"
                 id="login"
                 name="login"
                 onChange={this.handleChange}
@@ -127,7 +121,7 @@ class Query extends React.Component {
               <input
                 value={this.state.password}
                 type="password"
-                className="form-control text-center"
+                className="form-control"
                 id="password"
                 name="password"
                 onChange={this.handleChange}
@@ -140,7 +134,7 @@ class Query extends React.Component {
               <input
                 value={this.state.email}
                 type="email"
-                className="form-control text-center"
+                className="form-control"
                 id="email"
                 name="email"
                 onChange={this.handleChange}
@@ -167,131 +161,41 @@ class Query extends React.Component {
               </select>
               </label>
               <br />
-
               <br />
-                <fieldset>
-    <legend>Dietary Restrictions</legend>
-
-              {names.map((name, index)=> {
-
-              this.handleInputChange = this.handleInputChange.bind(this);
-              var term = [this.state.peanut, this.state.dairy, this.state.wheat, this.state.pork, this.state.soy, this.state.fish, this.state.shellfish];
-              var states = ["Peanuts:", "Dairy:", "Wheat:", "Pork:", "Soy:", "Fish:", "Shellfish:"]
-              return (
-
-              <label
-              key={index}
-              >
-               {states[index]}
-                <input
-                  name={name}
-                  type="checkbox"
-                  checked={term[index]}
-                  onChange={this.handleInputChange} />
-              </label>
 
 
-              )
+              <fieldset>
+              <legend>Dietary Restrictions</legend>
+
+                  {names.map((name, index)=> {
+
+                  this.handleInputChange = this.handleInputChange.bind(this);
+                  var term = [this.state.peanut, this.state.dairy, this.state.wheat, this.state.pork, this.state.soy, this.state.fish, this.state.shellfish];
+                  var states = ["Peanuts:", "Dairy:", "Wheat:", "Pork:", "Soy:", "Fish:", "Shellfish:"];
+                  return (
+
+                  <label key={index}>
+                   {states[index]}
+                  <input
+                      name={name}
+                      type="checkbox"
+                      checked={term[index]}
+                      onChange={this.handleInputChange} />
+                  </label>
+                  )
               })}
-
-{/*
-              <label>
-                Peanuts:
-                <input
-                  name="peanut"
-                  type="checkbox"
-                  checked={this.state.peanut}
-                  onChange={this.handleInputChange} />
-              </label>
-
-            
-
-              <label>
-                Dairy:
-                <input
-                  name="dairy"
-                  type="checkbox"
-                  checked={this.state.dairy}
-                  onChange={this.handleInputChange} />
-              </label>
-
-            
-
-              <label>
-                Wheat:
-                <input
-                  name="wheat"
-                  type="checkbox"
-                  checked={this.state.wheat}
-                  onChange={this.handleInputChange} />
-              </label>
-
-
-              <label>
-                Pork:
-                <input
-                  name="pork"
-                  type="checkbox"
-                  checked={this.state.pork}
-                  onChange={this.handleInputChange} />
-              </label>
-              
-           
-
-              <label>
-                Soy:
-                <input
-                  name="soy"
-                  type="checkbox"
-                  checked={this.state.soy}
-                  onChange={this.handleInputChange} />
-              </label>
-
-            
-              
-              <label>
-                Fish:
-                <input
-                  name="fish"
-                  type="checkbox"
-                  checked={this.state.fish}
-                  onChange={this.handleInputChange} />
-              </label>
-              
-           
-              
-              <label>
-                Shellfish:
-                <input
-                  name="shellfish"
-                  type="checkbox"
-                  checked={this.state.shellfish}
-                  onChange={this.handleInputChange} />
-              </label>
-*/}
               </fieldset>
-
-           <br/>
-           <br/>
-            
-              
-              <input
-                  value="Submit"
-                  className="btn"
-                  type="submit"
-              />
-               
-              
+             <input value="Submit" className="btn" type="submit"/>
+                 
             </div>
           </form>
         </div>
-      
-
       </div>
-          )
-        }
-}
 
+    )
+
+  }
+}
 
 
 module.exports = Query;

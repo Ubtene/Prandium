@@ -15,9 +15,11 @@ function Nav() {
 			<NavLink activeClassName='active' to='/header'>Header</NavLink>
 		</li>
 		<li id="nav">
-			<NavLink activeClassName='active' to='/search'>Search</NavLink>
+			<NavLink activeClassName='active' to='/yelp'>Search</NavLink>
 		</li>
-
+		<li id="nav">
+			<NavLink activeClassName='active' to='/restaurant'>Restaurant</NavLink>
+		</li>
 
 		</ul>
 		)

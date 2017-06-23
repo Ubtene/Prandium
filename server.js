@@ -4,6 +4,9 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var unirest = require("unirest");
+const yelp = require('yelp-fusion');
+const clientId = 'pbRwg0shy1Zy_gUqWLpiYQ';
+const clientSecret = '499HGjfOQVwIUWD9ys11menFEA8Ytu77zNrjRCVJ0qYHUQTdpfqdDKNaR7QDYNPy';
 
 // // Require History Schema
 // var History = require("./models/History");
@@ -53,9 +56,55 @@ res.json("thanks");
 })
 
 app.post('/yelp', function(req,res){
+
+	
 	console.log(req.body);
 
+
+
 })
+
+
+
+app.get("/yelp", function(req,res){
+console.log('in/yelpget');
+// console.log("-------------------------")
+// console.log("this is in get yelp" + req.body);
+// console.log("-------------------------")
+// console.log("Start of the yelp response");
+console.log(req.query.zipcode);
+console.log(req.query.type);
+        // Yelp response
+
+  const searchRequest = {
+  term: req.query.type,
+  location: req.query.zipcode
+  
+};
+
+
+      yelp.accessToken(clientId, clientSecret).then(response =>  
+      {
+            const client = yelp.client(response.jsonBody.access_token);
+
+            client.search(searchRequest).then(response => 
+            {
+              const firstResult = response.jsonBody.businesses[0];
+              const prettyJson = JSON.stringify(firstResult, null, 4);
+              // console.log(prettyJson);
+              res.send(firstResult);
+              // console.log("End of the Yelp Response");
+            });
+      }).catch(e => 
+      {
+        console.log(e);
+      });
+
+
+
+
+});
+
 
 
 // Listener

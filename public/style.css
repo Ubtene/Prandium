@@ -1,102 +1,128 @@
+/*//////////////////Entiresite//////////////////////*/
+
 body {
-	background-color: white;
-	/*background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLMaS0KIs5E8cQ_OKZErSPr9N72R1de3J5L8CMWxlQ2hqcZZLCg);*/
-	margin: 0 auto;
-	background-size: 100%;
-	font-family: Arial, Helvetica, sans-serif;
-	color: grey;
-	font-weight: normal;
-	padding: 0;
-}
-	
-
-
-strong {
-	color: grey;
+    background-color: white;
+    margin: 0 auto;
+    background-size: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: grey;
+    font-weight: normal;
+    padding: 0;
+    font-family: 'Harmonia Sans';
 }
 
 legend {
-	color: grey;
-}
-
-#checkbox {
-	display: flex; flex-direction: row;
-
-}
-
-#form {
-	background-color: white;
-
-	margin: 0;
-
+    color: grey;
 }
 
 label {
-	margin-right: 3%;
-}
-#header {
-	background-image: url(https://www.freshologize.ca/wp-content/uploads/2015/06/meal-plan-bg.jpg?id=1772);
-	background-size: 100%;
-	background-repeat: no-repeat;
-	background-size: cover;
-	color: coral;
-	color: red;
-/*	width: 100%;
-*/	text-shadow: 5px 5px 10px black;
-	text-align: center;
+    margin-right: 3%;
 }
 
 select {
-	width: 100%;
-}
-
-#top {
-
-	width: 95%;
-}
-
-span {
-	float: left;
-}
-
-#loginTitle {
-	float: left;
-	color: blue;
+    width: 100%;
 }
 
 .btn {
-	background-color: coral;
-	letter-spacing: 1.5px;
-	color: white;
-	border: 2px solid red;
-}
-
-#nav {
-	display: inline-flex;
-}
-
-.restaurantSearch{
-	width: 45%;	
-	float: left;
-	border: 0;
-	padding: 0;
-	text-align: left;
-	padding: 2%;
-
-}
-
-#type {
-	border: 0;
-}
-#zipcode {
-	border-color: white;
-}
-
-#rsContainer {
-padding: 0;
-
+    background-color: coral;
+    letter-spacing: 1.5px;
+    color: white;
+    border: 2px solid red;
 }
 
 .panel-body {
-width: 100%;
+    width: 100%;
 }
+
+
+/*///////////////////    HEADER      ////////////////////*/
+
+#header {
+    background-image: url(https://www.freshologize.ca/wp-content/uploads/2015/06/meal-plan-bg.jpg?id=1772);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: coral;
+    color: red;
+    text-shadow: 5px 5px 10px black;
+    text-align: center;
+}
+
+
+/*////////////////////        USERFORM         ////////////////////*/
+
+#loginTitle {
+    float: left;
+    color: blue;
+}
+
+#top {
+    width: 95%;
+}
+
+#checkbox {
+    display: flex;
+    flex-direction: row;
+}
+
+#form {
+	width: 70%;
+   	margin: 0 auto;
+	background-color: white;
+
+}
+
+span{
+	float: left;
+	margin-bottom: 3px;
+}
+
+/*//////////////    YelpSearch     ////////////////////////*/
+
+#yelpForm {
+	
+	
+	margin: 0 auto;
+	margin-top: 50px;
+    background-color: white;
+    width: 80%;
+}
+
+#restaurantsearch {
+	width: 40%;
+    border: 0;
+    float: left;
+}
+
+#rsContainer {
+    padding: 0;
+}
+
+#yelpSubmit {
+
+	float: right;
+}
+
+
+/*/////////////////   YELP RESULTS     //////////////////////////*/
+
+#reswell {
+    width: 75%;
+    font-family: 'Harmonia Sans';
+    font-size: 26px;
+    padding: 8%;
+}
+
+#yelpResults {
+	margin: 0 auto;
+	width: 80%;
+}
+
+/*////////////////////  NAV  /////////////////////////////*/
+
+#nav {
+    display: inline-flex;
+}
+
+
+

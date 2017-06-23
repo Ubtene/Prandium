@@ -20,7 +20,8 @@
     "react-dom": "^0.14.3",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "unirest": "^0.5.1"
+    "unirest": "^0.5.1",
+    "yelp-fusion": "^1.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.3.13",
