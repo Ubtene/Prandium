@@ -8,6 +8,13 @@ const yelp = require('yelp-fusion');
 const clientId = 'pbRwg0shy1Zy_gUqWLpiYQ';
 const clientSecret = '499HGjfOQVwIUWD9ys11menFEA8Ytu77zNrjRCVJ0qYHUQTdpfqdDKNaR7QDYNPy';
 
+
+
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+var session = require('express-session');
+var CurrentUser = {};
+
 // // Require History Schema
 // var History = require("./models/History");
 
@@ -40,13 +47,92 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // });
 
 // -------------------------------------------------
+// supply a session 'secret' to hash the session (security measure)
+app.use(session({
+    secret: "mySecret"
+}));
+// initialize the passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
+passport.serializeUser(function(user, done) {
+    // placeholder for custom user serialization
+    // null is for errors
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+    // placeholder for custom user deserialization.
+    // null is for errors
+    done(null, user);
+});
+
+passport.use(new GoogleStrategy({
+        clientID: "848838294022-7h0tlqrqq67isbjjav949n6uaor9cocl.apps.googleusercontent.com",
+        clientSecret: "Fn43-sWs-iBcdPHPjnBC3zFe",
+        callbackURL: "http://localhost:3000/auth/google/callback"
+    },
+
+
+    function(accessToken, refreshToken, profile, cb) {
+        console.log('in passport.usenewgoogle strategy');
+        // console.log(accessToken);
+
+        cb(null, accessToken, profile, refreshToken);
+
+        var given_name = profile.name.givenName;
+
+        var user_id = profile.id;
+
+        CurrentUser["user_id"] = user_id;
+
+        CurrentUser["given_name"] = given_name;
+
+        app.get("/api/user", function(req, res) {
+            res.json(CurrentUser);
+            res.end()
+        });
+
+    }));
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+
+app.get('/auth/google/callback', passport.authenticate('google', {
+    
+    successRedirect: '/success',
+    failureRedirect: '/',
+}));
+
+app.get('/success', isAuthenticated, function(req, res) {
+    console.log("in success");
+    // var successObj = {
+    //   google: true,
+    // };
+    // console.log(successObj);
+
+
+});
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+
+function isAuthenticated(req, res, next) {
+    if (req.user)
+        return next();
+    // if req.user does not exist redirect them to the fail page.  Here you can either redirect users back to the login page
+    // res.redirect('/fail');
+    console.log("failure");
+};
 
 app.use(express.static("./public"));
 
 app.get("/", function(req,res){
 
-	    res.sendFile(__dirname + "/public/index.html");
+	    // res.sendFile(__dirname + "/public/index.html");
 })
 
 app.post("/", function(req,res){
@@ -55,10 +141,22 @@ res.json("thanks");
 
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
 app.post('/yelp', function(req,res){
 
-	
-	console.log(req.body);
+  
+  console.log(req.body);
 
 
 

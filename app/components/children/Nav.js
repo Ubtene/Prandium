@@ -20,6 +20,9 @@ function Nav() {
 		<li id="nav">
 			<NavLink activeClassName='active' to='/restaurant'>Restaurant</NavLink>
 		</li>
+		<li id="nav">
+			<NavLink activeClassName='active' to='/login'>Login</NavLink>
+		</li>
 
 		</ul>
 		)

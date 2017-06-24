@@ -21,6 +21,11 @@ var helper = {
 			return(result);
 		})
 
+	},
+
+	getGoogle(){
+		return axios.get('/auth/google');
+		console.log("sent google");
 	}
 
 };

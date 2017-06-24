@@ -1,8 +1,8 @@
 var React = require('react');
 const Userform = require('./children/Userform.js');
-const Header = require('./children/Header.js')
-const Yelp = require('./children/Yelp')
-
+const Header = require('./children/Header.js');
+const Yelp = require('./children/Yelp');
+const Login = require('./children/Login');
 class Main extends React.Component{
 
 
@@ -10,6 +10,7 @@ class Main extends React.Component{
   render() {
     return (
       <div className="container">
+      <Login />
       <Header />
       <Userform />
       <Yelp />
