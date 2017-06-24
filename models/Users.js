@@ -7,23 +7,23 @@
       var MealSchema = new Schema({
         userID: {
           type: String,
-          unique: true
+          // unique: true
 
         },
-        generalRestriction: {
+        preferences: {
 
         	type:String,
 
 
         },
-        particularRes:{
+        restrictions:{
 
         	type: Array,
 
         },
         userEmail: {
           type: String,
-          unique: true
+          // unique: true
 
         },
         meals: {
@@ -39,7 +39,7 @@
 
       });
 
-      MealSchema.plugin(uniqueValidator);
+      // MealSchema.plugin(uniqueValidator);
 
 
     var userMeals = mongoose.model("userMeals", MealSchema);

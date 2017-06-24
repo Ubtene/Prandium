@@ -4,7 +4,8 @@
 
 <head>
     <title>Prandium</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -13,12 +14,12 @@
         <input type=text name="email"></input>
         <input type="text" name="generalRestrictions"></input>
         <input type="text" name="particularRestrictions"></input>
-        <div id="checks"> 
-        <input type="checkbox"  name="monday"> Monday </input>
-        <input type="checkbox" name="tuesday"> Tuesday </input>
-        <input type="checkbox" name="wednesday"> Wednesday </input>
-        <input type="checkbox" name="thursday"> Thursday </input>
-        <input type="checkbox" name="friday">Friday </input>
+        <div id="checks">
+            <input type="checkbox" name="monday"> Monday </input>
+            <input type="checkbox" name="tuesday"> Tuesday </input>
+            <input type="checkbox" name="wednesday"> Wednesday </input>
+            <input type="checkbox" name="thursday"> Thursday </input>
+            <input type="checkbox" name="friday">Friday </input>
         </div>
         <input type="checkbox" name="particularRestrictions"></input>
         <input type="hidden" name="user" value="">
@@ -29,93 +30,111 @@
 
 <script type="text/javascript">
 
-$(document).ready( function () {
+    $(document).ready(function () {
 
-
-$.ajax({
-
-    type: "GET",
-    url: "/api/user",
-    success: function(data) {
-
-        var user = data;
-        $("[name=user]").val(user);
-
-    },
-
-
-});
-
-
-$("#button").on("click", function() {
-
-
-        //  var geocoder = new google.maps.Geocoder;
-
-        //         if (navigator.geolocation) {
-        //             navigator.geolocation.getCurrentPosition(function (position) {
-        //                 var pos = {
-        //                     lat: position.coords.latitude,
-        //                     lng: position.coords.longitude
-        //                 };
-        //                 geocoder.geocode({
-        //                     'location': pos
-        //                 }, function (results, status) {
-        //                             console.log(results);
-
-        //                             var geo =  $("<div>");
-                                    
-        //                             geo.addClass('geobutton');
-
-        //                             geo.html(results[7].formatted_address);
-
-        //                             $('#passport-div').append(geo);
-        //                 });
-        //             });
-        //         };
-
-      var  daysArray = [];
-
-
-        $("#checks :checked").each(function () {
-
-            daysArray.push($(this).val());
-
-        });
-
-        var user = $("[name=user]").val();
-
-        var preferences = $("[name=generalRestrictions]").val();
-
-        var restrictions = $("[name=particularRestrictions]").val();
-       var email = $("[name=email").val();
-
-        var obj = {
-
-            user: user,
-            preferences: preferences,
-            restrictions: restrictions,
-            email: email,
-            days: daysArray
-
-        }
-
-        $("[name=user").val("");
-        $("[name=user").val("");
-        $("[name=user").val("");
 
         $.ajax({
 
-            type: "POST",
-            data: obj,
-            url: "/api/userdatabase"
+            type: "GET",
+            url: "/api/user",
+            success: function (data) {
 
-        });  
+                var user = data.user_id;
+                $("[name=user]").val(user);
+    
 
-});
+            },
 
-});
 
+        });
+
+
+        $("#button").on("click", function () {
+
+
+            //  var geocoder = new google.maps.Geocoder;
+
+            //         if (navigator.geolocation) {
+            //             navigator.geolocation.getCurrentPosition(function (position) {
+            //                 var pos = {
+            //                     lat: position.coords.latitude,
+            //                     lng: position.coords.longitude
+            //                 };
+            //                 geocoder.geocode({
+            //                     'location': pos
+            //                 }, function (results, status) {
+            //                             console.log(results);
+
+            //                             var geo =  $("<div>");
+
+            //                             geo.addClass('geobutton');
+
+            //                             geo.html(results[7].formatted_address);
+
+            //                             $('#passport-div').append(geo);
+            //                 });
+            //             });
+            //         };
+
+            var daysArray = [];
+
+
+            $("#checks :checked").each(function () {
+
+            var dayObj = { day : $(this).val(),
+               }
+
+                daysArray.push(dayObj);
+
+            });
+
+            var user2 = $("[name=user]").val();
+
+            console.log(user2);
+
+            var preferences = $("[name=generalRestrictions]").val();
+
+            var restrictions = $("[name=particularRestrictions]").val();
+           
+            var email = $("[name=email").val();
+
+            $("[name=user").val("");
+
+            var obj = {
+                user: user2,
+                preferences: preferences,
+                restrictions: restrictions,
+                email: email,
+                days: daysArray
+
+            }
+
+
+            $.ajax({
+
+                type: "POST",
+                data: obj,
+                url: "/api/userdatabase"
+
+            }).done(function (req, res) {
+
+            var foodForDays = res;
+
+            for (i=0 ; i <foodForDays.length; i++) {
+   
+             console.log(foodForDays[0]); 
+
+
+            }
+
+
+            });
+
+
+
+        });
+
+    });
 </script>
 
 </html>

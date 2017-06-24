@@ -65,8 +65,9 @@ passport.use(new GoogleStrategy({
         CurrentUser["given_name"] = given_name;
 
         app.get("/api/user", function(req, res) {
+        	console.log("doing things");
             res.json(CurrentUser);
-            res.end()
+            res.end();
         });
 
     }));
@@ -81,6 +82,7 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 
 app.get('/success', isAuthenticated, function(req, res) {
     res.sendFile(path.join(__dirname + '/views/index.html'));
+    
 });
 
 app.get('/logout', function(req, res){
@@ -96,8 +98,6 @@ function isAuthenticated(req, res, next) {
     // res.redirect('/fail');
     console.log("failure");
 };
-
-
 
 require("./controller/controller.js")(app);
 
