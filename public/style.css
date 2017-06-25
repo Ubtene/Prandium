@@ -73,8 +73,10 @@ select {
 }
 
 span{
-	float: left;
+	/*float: left;*/
+    
 	margin-bottom: 3px;
+
 }
 
 /*//////////////    YelpSearch     ////////////////////////*/
@@ -117,6 +119,22 @@ span{
 	margin: 0 auto;
 	width: 80%;
 }
+
+#roundedImage {
+   margin-bottom: 20px;
+ 
+}
+
+#resetYelp {
+    width: 150px;
+    background-color: white;
+    color: skyblue;
+    font-weight: 700;
+    border-color: skyblue;
+    letter-spacing: 6px;
+
+}
+
 
 /*////////////////////  NAV  /////////////////////////////*/
 

@@ -9,9 +9,10 @@ super(props);
 this.state = {
 name: '',
 address: '',
+address2: '',
 phone: '',
 link: '',
-image: ''
+image: 'https://media2.giphy.com/media/12WHz2qK44JTq0/200.webp#7-grid1'
 }
 this.handleClick = this.handleClick.bind(this); 
 }
@@ -25,7 +26,10 @@ console.log('clicked');
 this.props.onSubmit(zipcode, term);
 }
 
+componentDidUpdate(){
+    console.log(this.state);
 
+}
 
 componentDidMount(){
 
@@ -34,8 +38,9 @@ componentDidMount(){
           console.log(data);
           this.setState({
             name: data.data.name,
-            address: data.data.location.address1,
-            phone: data.data.phone,
+            address: data.data.location.display_address[0],
+            address2: data.data.location.display_address[1],
+            phone: data.data.display_phone,
             link: data.data.url,
             image: data.data.image_url
           })
@@ -52,30 +57,32 @@ render(){
 
 
         <div className="container" id="yelpResults">
-            <h1>HI I'M YOUR RESULTS </h1>
+            <h1>YOUR RESULTS </h1>
 
             <div className="media">
 
                 <div className="media-left media-top">
                   <a href="#">
-                    <img className="media-object" src={this.state.image} alt="..." width="150" height="150" />
+                    <img id='roundedimage' className="media-object" src={this.state.image} alt="Waiting" width="150" height="150" />
                   </a>
                 </div>
 
                 <div className="media-body">
 
-                    <div className="well sm-well" id="reswell">Restaurant: {this.state.name}</div>
-                    <div className="well sm-well" id="reswell">Zipcode: {this.props.zipcode}</div>
-                    <div>{this.state.address}</div>
-                    <div>{this.state.phone}</div>
-                    <div>{this.state.link}</div>
+                <address> 
+                <a href={this.state.link}>{this.state.name}</a><br/>
+                {this.state.address}<br/>
+                {this.state.address2}<br/>
+                {this.state.phone}<br/>
+                </address>
 
                 </div>
             </div>
 
             <button
             onClick={this.handleClick}
-            className="btn btn-danger"
+            id="resetYelp"
+            className="btn btn-danger btn-lg"
             >  
             Reset
             </button>  
