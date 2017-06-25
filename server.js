@@ -7,7 +7,7 @@ var unirest = require("unirest");
 const yelp = require('yelp-fusion');
 const clientId = 'pbRwg0shy1Zy_gUqWLpiYQ';
 const clientSecret = '499HGjfOQVwIUWD9ys11menFEA8Ytu77zNrjRCVJ0qYHUQTdpfqdDKNaR7QDYNPy';
-
+const cors = require('cors');
 
 
 var passport = require('passport');
@@ -22,6 +22,21 @@ var CurrentUser = {};
 var app = express();
 // Sets an initial port. We'll use this later in our listener
 var PORT = process.env.PORT || 3000;
+
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Authorization");
+  next();
+});
+// app.use(cors({
+//   "origin": "*",
+//   "methods": "GET",
+//   "preflightContinue": true,
+//   "optionsSuccessStatus": 204 
+// }));
+
 
 // Run Morgan for Logging
 app.use(logger("dev"));
@@ -99,19 +114,19 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 
 
 app.get('/auth/google/callback', passport.authenticate('google', {
-    
-    successRedirect: '/success',
-    failureRedirect: '/',
+        
+    successRedirect: '/',
+    // failureRedirect: '/',
 }));
 
 app.get('/success', isAuthenticated, function(req, res) {
-    console.log("in success");
-    // var successObj = {
-    //   google: true,
-    // };
+    
+    var successObj = {
+      google: true,
+    };
     // console.log(successObj);
-
-
+    // res.send(successObj);
+    res.redirect('/');
 });
 
 app.get('/logout', function(req, res){
@@ -132,7 +147,7 @@ app.use(express.static("./public"));
 
 app.get("/", function(req,res){
 
-	    // res.sendFile(__dirname + "/public/index.html");
+	    res.sendFile(__dirname + "/public/index.html");
 })
 
 app.post("/", function(req,res){

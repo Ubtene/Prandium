@@ -1,4 +1,5 @@
-var axios = require("axios");   
+var axios = require("axios");  
+import 'whatwg-fetch';
 
 var helper = {
 
@@ -24,9 +25,16 @@ var helper = {
 	},
 
 	getGoogle(){
-		return axios.get('/auth/google');
-		console.log("sent google");
-	}
+		return axios.get('/api/user').then(function(result){
+			console.log(result);
+			if(result){
+				console.log("got true that google.");
+				return(result);
+			}
+
+
+		});
+		}
 
 };
 
