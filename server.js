@@ -112,6 +112,8 @@ passport.use(new GoogleStrategy({
 
     var user_id = profile.id;
 
+	// console.log(user_id);
+
     CurrentUser["user_id"] = user_id;
 
     CurrentUser["given_name"] = given_name;
@@ -121,23 +123,27 @@ passport.use(new GoogleStrategy({
      
       userMeals.find({userID: user_id}).exec(function (err, results) {
 
-       if (err) {
+       if (results.length === 0) {
 
-                res.json(user_id + "no data base" );
-                res.end();
+	   var AnObj = {
+
+          Googleid: user_id,
+
+		}
+                res.send(AnObj);
         }       
 
-                var userInfo = results; 
+     else {
 
-                res.json(results);                      
+		        console.log("found a user");
+                res.send({
+                    test: "yahoo"
+                });  
 
-                            });
-        // old code 
-        // res.json(CurrentUser);
-        // res.end();
-   
-//end of get
- });
+     }                    
+
+             });
+   });
 
 }));
 

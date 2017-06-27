@@ -26,11 +26,32 @@ var helper = {
 
 	getGoogle(){
 		return axios.get('/api/user').then(function(result){
-			console.log(result);
-			if(result){
-				console.log("got true that google.");
-				return(result);
+
+			console.log("got that google");
+
+			if(result.length === 0) {
+
+				var id = result.Googleid;
+
+				return id;
+
+				//more react things
+
 			}
+
+			else {
+
+				var hugeMongoObject = result;
+
+				return hugeMongoObject;
+
+				//more react things
+
+
+
+
+			}
+		
 
 
 		});
