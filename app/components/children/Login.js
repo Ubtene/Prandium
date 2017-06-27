@@ -9,7 +9,8 @@ constructor(props){
 super(props);
 this.state = {
 
-	name: ''
+	id: '',
+	email: ''
 
 };
 this.renderLogin = this.renderLogin.bind(this);
@@ -25,16 +26,27 @@ handleClick(){
 }
 
 componentWillMount(){
-	console.log("in Willmounting on login component");
+	console.log("in Willmount on login component");
 	
 	helpers.getGoogle().then(function(result){
-		this.setState({name: result.data.given_name});
 
+		console.log(result);
+ 
+		// this.setState({
+		// 	id: result.data.Googleid,
+		// });
+
+
+	// console.log("no user data");
 
 	}.bind(this));
-console.log(this.state);
+// console.log(this.state);
 
 }
+
+
+
+
 componentWillUnmount(){
 
 }
@@ -42,6 +54,8 @@ componentWillUnmount(){
 componentDidUpdate() {
 
 
+
+     
 
 
 console.log("----------------");
@@ -64,7 +78,7 @@ renderLogin(){
 render(){
 	return (
 	<div>
-	{this.state.name ? <Yelp /> : <GLogin />}
+	{this.state.id ? <Yelp /> : <GLogin />}
 	</div>	
 	)		
 }
