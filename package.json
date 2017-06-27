@@ -8,7 +8,7 @@
         "dev": "webpack & node server",
         "start": "node server",
         "build": "webpack",
-        "serve": "webpack-dev-server"
+        "serve": "webpack-dev-server --inline"
     },
     "license": "ISC",
     "dependencies": {
@@ -39,7 +39,7 @@
         "babel-loader": "^6.2.0",
         "babel-preset-es2015": "^6.3.13",
         "babel-preset-react": "^6.3.13",
-        "webpack": "^1.13.1",
+        "webpack": "^2.2.0-rc.3",
         "webpack-dev-server": "^2.5.0"
     }
 }
