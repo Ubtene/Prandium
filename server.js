@@ -14,6 +14,8 @@ var CurrentUser = {};
 var PORT = 3000;
 var app = express();
 
+
+
 // Run Morgan for Logging
 app.use(logger("dev"));
 app.use(bodyParser.json());
@@ -68,7 +70,17 @@ passport.use(new GoogleStrategy({
         	console.log("doing things");
             res.json(CurrentUser);
             res.end();
+
+            mongoose.Promise = global.Promise;
+            mongoose.connect("mongodb://127.0.0.1:27017/Prandium");
+            var db = mongoose.connection;
+
+            userMeals.find({user_id:user_id}).exec(function(err, results) {
+                console.log(results);
+            });
         });
+
+        
 
     }));
 
@@ -82,6 +94,7 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 
 app.get('/success', isAuthenticated, function(req, res) {
     res.sendFile(path.join(__dirname + '/views/index.html'));
+
     
 });
 
