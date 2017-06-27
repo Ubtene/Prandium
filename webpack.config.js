@@ -14,6 +14,7 @@ module.exports = {
       {
         // Only working with files that in in a .js or .jsx extension
         test: /\.jsx?$/,
+        exclude: /node_modules/,
         // Webpack will only process files in our app folder. This avoids processing
         // node modules and server files unnecessarily
         include: /app/,
@@ -29,7 +30,7 @@ module.exports = {
     publicPath: "/",
     contentBase: "./public",
     hot: true,
-    inline:true
+    inline:true //******this may have no <impact></impact>
 },
   // This lets us debug our react code in chrome dev tools. Errors will have lines and file names
   // Without this the console says all errors are coming from just coming from bundle.js
