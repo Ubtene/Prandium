@@ -5,4 +5,4 @@ var Main = require("./components/main.js");
 
 var Routes = require('./config/routes.js')
 
-ReactDOM.render(<Main />, document.getElementById("first-spoon"));
+ReactDOM.render(<Main />, document.getElementById("root"));
