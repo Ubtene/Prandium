@@ -16,7 +16,7 @@ var session = require('express-session');
 var CurrentUser = {};
 
 // // Require History Schema
-// var History = require("./models/History");
+var userMeals = require("./models/User.js");
 
 // Create Instance of Express
 var app = express();
@@ -48,6 +48,21 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // app.use(express.static("./public"));
 
 // -------------------------------------------------
+
+      mongoose.Promise = global.Promise;
+        
+        mongoose.connect("mongodb://127.0.0.1:27017/Prandium");
+        
+        var db = mongoose.connection;
+
+                db.on("error", function (err) {
+                    console.log("Mongoose Error: ", err);
+                });
+
+                db.once("open", function () {
+                    console.log("Mongoose connection successful.");
+                });
+
 
 // MongoDB Configuration configuration (Change this URL to your own DB)
 // mongoose.connect("mongodb://admin:codingrocks@ds023664.mlab.com:23664/reactlocate");
@@ -82,33 +97,91 @@ passport.deserializeUser(function(user, done) {
     done(null, user);
 });
 
+
 passport.use(new GoogleStrategy({
-        clientID: "848838294022-7h0tlqrqq67isbjjav949n6uaor9cocl.apps.googleusercontent.com",
-        clientSecret: "Fn43-sWs-iBcdPHPjnBC3zFe",
-        callbackURL: "http://localhost:3000/auth/google/callback"
-    },
+    clientID: "848838294022-7h0tlqrqq67isbjjav949n6uaor9cocl.apps.googleusercontent.com",
+    clientSecret: "Fn43-sWs-iBcdPHPjnBC3zFe",
+    callbackURL: "http://localhost:3000/auth/google/callback"
+}, function (accessToken, refreshToken, profile, cb) {
+
+    // console.log(accessToken);
+
+    cb(null, accessToken, profile, refreshToken);
+
+    var given_name = profile.name.givenName;
+
+    var user_id = profile.id;
+
+    CurrentUser["user_id"] = user_id;
+
+    CurrentUser["given_name"] = given_name;
+
+    app.get("/api/user", function (req, res) {
+
+     
+      userMeals.find({userID: user_id}).exec(function (err, results) {
+
+       if (err) {
+
+                res.json(user_id + "no data base" );
+                res.end();
+        }       
+
+                var userInfo = results; 
+
+                res.json(results);                      
+
+                            });
+        // old code 
+        // res.json(CurrentUser);
+        // res.end();
+   
+//end of get
+ });
+
+}));
 
 
-    function(accessToken, refreshToken, profile, cb) {
-        console.log('in passport.usenewgoogle strategy');
-        // console.log(accessToken);
 
-        cb(null, accessToken, profile, refreshToken);
+// passport.use(new GoogleStrategy({
+//         clientID: "848838294022-7h0tlqrqq67isbjjav949n6uaor9cocl.apps.googleusercontent.com",
+//         clientSecret: "Fn43-sWs-iBcdPHPjnBC3zFe",
+//         callbackURL: "http://localhost:3000/auth/google/callback"
+//     },
 
-        var given_name = profile.name.givenName;
 
-        var user_id = profile.id;
+//     function(accessToken, refreshToken, profile, cb) {
+//         console.log('in passport.usenewgoogle strategy');
+//         // console.log(accessToken);
 
-        CurrentUser["user_id"] = user_id;
+//         cb(null, accessToken, profile, refreshToken);
 
-        CurrentUser["given_name"] = given_name;
+//         var given_name = profile.name.givenName;
 
-        app.get("/api/user", function(req, res) {
-            res.json(CurrentUser);
-            res.end()
-        });
+//         var user_id = profile.id;
 
-    }));
+//         CurrentUser["user_id"] = user_id;
+
+//         CurrentUser["given_name"] = given_name;
+
+//         app.get("/api/user", function(req, res) {
+
+//            userMeals.find({userID: user_id}).exec(function (err, results) {
+
+//        if (err) {
+
+//                 res.json(CurrentUser.user_id + "no data base" );
+//         }       
+
+//         //         var userInfo = results; 
+
+//         //         res.json(results);   
+//         //     res.json(CurrentUser);
+//         //     res.end()
+//         });
+// });
+
+  // };    // }));
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
