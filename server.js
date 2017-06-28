@@ -1,3 +1,4 @@
+
 // Include Server Dependencies
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -19,8 +20,17 @@ var CurrentUser = {};
 // // Require History Schema
 var userMeals = require("./models/User.js");
 
-// Create Instance of Express
+//*************** =====integrate node and webpack======**************
 var app = express();
+
+// serves to intercept incoming requests and and it off to webpack
+const webpackMiddleWare = require('webpack-dev-middleware');
+// compile all application assets
+const webpack =require('webpack');
+// instructs webpack on how to run correctly
+const webpackConfig =require('./webpack.config');
+app.use(webpackMiddleWare(webpack(webpackConfig)));
+// Create Instance of Express
 // Sets an initial port. We'll use this later in our listener
 var PORT = process.env.PORT || 3000;
 
