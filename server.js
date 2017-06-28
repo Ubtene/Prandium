@@ -209,7 +209,6 @@ var password = req.body.restrictions.password;
 
 var preferences = req.body.restrictions.preference;
 
-<<<<<<< HEAD
 var restriction = req.body.restrictions.restriction;
 
 var modifiedRestrictions = restriction.join("+");
@@ -236,33 +235,6 @@ var modifiedRestrictions = restriction.join("+");
 
                     mealPlanArray.push(result.body.recipes[i]);
                 }
-=======
-console.log(req.body);
-
-
-var a = req.body.restrictions.restriction;
-
-var b = a.join('+');
-
-console.log(b);
-
-
-
-
-// var modifiedRestriction = restrictions.toString();
-
-// var data =  modifiedRestriction.toString(",");
-
-// // console.log(data);
-
-// theString = "";
-
-// for ( i = 0; i<data.length; i++){
-//   theString += data[i] + "+";
-// }
-
-// console.log(theString);
->>>>>>> yelpmainpage
 
 
   userMeals.create({
@@ -285,23 +257,8 @@ console.log(b);
                 });
 });
 
-<<<<<<< HEAD
 });
 
-=======
-
-
-
-
-
-
-
-
-
-
-
-// this can probably be taken out all it's doing is console logging.
->>>>>>> yelpmainpage
 app.post('/yelp', function(req,res){
 
   console.log(req.body);
