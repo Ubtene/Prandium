@@ -75,7 +75,11 @@ class Query extends React.Component {
         }
 
       this.setState({restrictions: restrictions});
-      helpers.postForm(this.state.login, this.state.email, this.state.password, this.state.preferences, this.state.restrictions);
+      helpers.postForm(this.state.login, this.state.email, this.state.password, this.state.preferences, this.state.restrictions).then(function(result){
+
+        console.log(result);
+
+      });
 
       this.setState({
       login: "",

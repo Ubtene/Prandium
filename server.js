@@ -8,6 +8,8 @@ const yelp = require('yelp-fusion');
 const clientId = 'pbRwg0shy1Zy_gUqWLpiYQ';
 const clientSecret = '499HGjfOQVwIUWD9ys11menFEA8Ytu77zNrjRCVJ0qYHUQTdpfqdDKNaR7QDYNPy';
 const cors = require('cors');
+var userMeals = require("./models/User.js");
+var unirest = require("unirest");
 
 
 var passport = require('passport');
@@ -229,11 +231,56 @@ app.get("/", function(req,res){
 	    res.sendFile(__dirname + "/public/index.html");
 })
 
-app.post("/", function(req,res){
-console.log(req.body);
-res.json("thanks");
 
-})
+
+
+app.post("/", function(req,res){
+
+
+var userID = req.body.restrictions.login;
+
+var userEmail = req.body.restrictions.email;
+
+var password = req.body.restrictions.password;
+
+var preferences = req.body.restrictions.preference;
+
+console.log(req.body);
+
+
+var restrictions = [];
+
+for (i=0 ; i < req.body.restrictions.restriction.length ; i++) {
+
+   restrictions.push(req.body.restrictions.restriction[i]);
+
+}
+
+
+var modifiedRestriction = restrictions.toString();
+
+var data =  modifiedRestriction.toString(",");
+
+theString = "";
+
+for ( i = 0; i<data.length; i++){
+  theString += data[i] + "+";
+}
+
+console.log(theString);
+
+
+
+
+
+var testObj = {
+
+  test: "hello world"
+}
+
+res.send(testObj);
+
+});
 
 
 
