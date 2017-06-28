@@ -209,6 +209,7 @@ var password = req.body.restrictions.password;
 
 var preferences = req.body.restrictions.preference;
 
+<<<<<<< HEAD
 var restriction = req.body.restrictions.restriction;
 
 var modifiedRestrictions = restriction.join("+");
@@ -235,6 +236,33 @@ var modifiedRestrictions = restriction.join("+");
 
                     mealPlanArray.push(result.body.recipes[i]);
                 }
+=======
+console.log(req.body);
+
+
+var a = req.body.restrictions.restriction;
+
+var b = a.join('+');
+
+console.log(b);
+
+
+
+
+// var modifiedRestriction = restrictions.toString();
+
+// var data =  modifiedRestriction.toString(",");
+
+// // console.log(data);
+
+// theString = "";
+
+// for ( i = 0; i<data.length; i++){
+//   theString += data[i] + "+";
+// }
+
+// console.log(theString);
+>>>>>>> yelpmainpage
 
 
   userMeals.create({
@@ -257,8 +285,23 @@ var modifiedRestrictions = restriction.join("+");
                 });
 });
 
+<<<<<<< HEAD
 });
 
+=======
+
+
+
+
+
+
+
+
+
+
+
+// this can probably be taken out all it's doing is console logging.
+>>>>>>> yelpmainpage
 app.post('/yelp', function(req,res){
 
   console.log(req.body);
@@ -266,40 +309,37 @@ app.post('/yelp', function(req,res){
 });
 
 
-
+// THIS IS THE BRAD AND BUTTER OF THE YELP APP
 app.get("/yelp", function(req,res){
-console.log('in/yelpget');
-// console.log("-------------------------")
-// console.log("this is in get yelp" + req.body);
-// console.log("-------------------------")
-// console.log("Start of the yelp response");
-console.log(req.query.zipcode);
-console.log(req.query.type);
-        // Yelp response
+  console.log('in/yelpget');
+  console.log(req.query.zipcode);
+  console.log(req.query.type);
 
+  // this is taking the information from the front end and then saving it into an object to send throught the yelp api to 
+  // for a restaurant returned
   const searchRequest = {
   term: req.query.type,
   location: req.query.zipcode
   
 };
 
+      
+  yelp.accessToken(clientId, clientSecret).then(response =>  
+  {
+        const client = yelp.client(response.jsonBody.access_token);
 
-      yelp.accessToken(clientId, clientSecret).then(response =>  
-      {
-            const client = yelp.client(response.jsonBody.access_token);
-
-            client.search(searchRequest).then(response => 
-            {
-              const firstResult = response.jsonBody.businesses[0];
-              const prettyJson = JSON.stringify(firstResult, null, 4);
-              // console.log(prettyJson);
-              res.send(firstResult);
-              // console.log("End of the Yelp Response");
-            });
-      }).catch(e => 
-      {
-        console.log(e);
-      });
+        client.search(searchRequest).then(response => 
+        {
+          const firstResult = response.jsonBody.businesses[0];
+          const prettyJson = JSON.stringify(firstResult, null, 4);
+          // console.log(prettyJson);
+          res.send(firstResult);
+          // console.log("End of the Yelp Response");
+        });
+  }).catch(e => 
+  {
+    console.log(e);
+  });
 
 });
 

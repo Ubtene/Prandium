@@ -10,7 +10,7 @@ var helpers = require('./../utils/helpers.js');
 var names = ["peanut", "dairy", "wheat", "pork", "soy", "fish", "shellfish"];
 
 
-
+{/* Builds a form and takes in data that is sent back to the server to build a user*/}
 
 class Query extends React.Component {
 
@@ -30,14 +30,16 @@ class Query extends React.Component {
       shellfish: false,
       restrictions: []
   }
-
+  {/*  // we bind these functions to (this) so that they can handle their specific instance in use*/}
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleInputChange(event) {
 
+ 
+  handleInputChange(event) {
+   {/* // this takes in a paramater of the event and upon change changes the state upon which checkboxes are checked*/}
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -50,6 +52,7 @@ class Query extends React.Component {
 
 
   handleChange(event) {
+  {/*}  // this takes in a paramater of the event and upon change changes the state upon the user input */}
 
     const target = event.target;
     const value = target.value;
@@ -63,6 +66,7 @@ class Query extends React.Component {
 
 
   handleSubmit(event) {
+       {/* // this is called when you submit the form, it will then send an object to the server with the users information*/}
         event.preventDefault(); 
         var options = ["peanut", "dairy", "wheat", "pork", "soy", "fish", "shellfish"];
         var restrictions = this.state.restrictions;
@@ -75,12 +79,14 @@ class Query extends React.Component {
         }
 
       this.setState({restrictions: restrictions});
+
+    {/* Here we're calling the postform function from the helpers file and sending the data from the form to the back end and setting up a promise  */}
       helpers.postForm(this.state.login, this.state.email, this.state.password, this.state.preferences, this.state.restrictions).then(function(result){
 
         console.log(result);
 
       });
-
+    {/* setting initial state for component so we can pass this to the server once the form is filled  */}
       this.setState({
       login: "",
       email: '',
@@ -170,7 +176,8 @@ class Query extends React.Component {
 
               <fieldset>
               <legend>Dietary Restrictions</legend>
-
+                  {/*  here i'm mapping throug the different restritions adding a handleinputchange and binding it to that specific instance all information provided
+                  is so I can build each instance of the checkbox index is used as a key to signify each checkbox  */}
                   {names.map((name, index)=> {
 
                   this.handleInputChange = this.handleInputChange.bind(this);
