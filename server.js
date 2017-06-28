@@ -47,23 +47,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-// app.use(express.static("./public"));
 
-// -------------------------------------------------
-
-      mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
         
-        mongoose.connect("mongodb://127.0.0.1:27017/Prandium");
+  mongoose.connect("mongodb://127.0.0.1:27017/Prandium");
         
-        var db = mongoose.connection;
+ var db = mongoose.connection;
 
-                db.on("error", function (err) {
+ db.on("error", function (err) {
                     console.log("Mongoose Error: ", err);
                 });
 
                 db.once("open", function () {
                     console.log("Mongoose connection successful.");
                 });
+
+
+// app.use(express.static("./public"));
+
+// -------------------------------------------------
+
 
 
 // MongoDB Configuration configuration (Change this URL to your own DB)
@@ -151,45 +154,6 @@ passport.use(new GoogleStrategy({
 
 
 
-// passport.use(new GoogleStrategy({
-//         clientID: "848838294022-7h0tlqrqq67isbjjav949n6uaor9cocl.apps.googleusercontent.com",
-//         clientSecret: "Fn43-sWs-iBcdPHPjnBC3zFe",
-//         callbackURL: "http://localhost:3000/auth/google/callback"
-//     },
-
-
-//     function(accessToken, refreshToken, profile, cb) {
-//         console.log('in passport.usenewgoogle strategy');
-//         // console.log(accessToken);
-
-//         cb(null, accessToken, profile, refreshToken);
-
-//         var given_name = profile.name.givenName;
-
-//         var user_id = profile.id;
-
-//         CurrentUser["user_id"] = user_id;
-
-//         CurrentUser["given_name"] = given_name;
-
-//         app.get("/api/user", function(req, res) {
-
-//            userMeals.find({userID: user_id}).exec(function (err, results) {
-
-//        if (err) {
-
-//                 res.json(CurrentUser.user_id + "no data base" );
-//         }       
-
-//         //         var userInfo = results; 
-
-//         //         res.json(results);   
-//         //     res.json(CurrentUser);
-//         //     res.end()
-//         });
-// });
-
-  // };    // }));
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
@@ -245,63 +209,61 @@ var password = req.body.restrictions.password;
 
 var preferences = req.body.restrictions.preference;
 
-console.log(req.body);
+var restriction = req.body.restrictions.restriction;
 
-
-var restrictions = [];
-
-for (i=0 ; i < req.body.restrictions.restriction.length ; i++) {
-
-   restrictions.push(req.body.restrictions.restriction[i]);
-
-}
-
-
-var modifiedRestriction = restrictions.toString();
-
-var data =  modifiedRestriction.toString(",");
-
-theString = "";
-
-for ( i = 0; i<data.length; i++){
-  theString += data[i] + "+";
-}
-
-console.log(theString);
+var modifiedRestrictions = restriction.join("+");
 
 
 
+// end of gathering info, commencing api query
+
+    // These code snippets use an open-source library. http://unirest.io/nodejs
+    var string1 = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/random?limitLicense=false&number=2&tags=";
+    var string2 = preferences.toLowerCase();
+    console.log(string2);
+    var string3 = string1.concat(string2 + "+");
+    var string4 = string3.concat(modifiedRestrictions);
+    console.log(string4);
+        unirest.get(string4)
+        .header("X-Mashape-Key", "RdXEu67LNZmshdxsrbAGe3gh9fAKp1VdlhxjsnnRI93ldi2bTU")
+            .header("Accept", "application/json")
+            .end(function (result) {
+
+                var mealPlanArray = [];
+
+                for (i = 0; i < 7; i++) {
+
+                    mealPlanArray.push(result.body.recipes[i]);
+                }
 
 
-var testObj = {
+  userMeals.create({
+                    userID: userID,
+                    userEmail: userEmail,
+                    password: password,
+                    meals:mealPlanArray,
+                    preferences: preferences,
+                    restrictions: "dairy",
+                    days:[],
+                    date: Date.now()
+                }, function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    } else {
 
-  test: "hello world"
-}
-
-res.send(testObj);
+                        console.log("saved your meals");        
+                        res.send(data);
+                    }
+                });
+});
 
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
 app.post('/yelp', function(req,res){
 
-  
   console.log(req.body);
 
-
-
-})
+});
 
 
 
@@ -339,9 +301,6 @@ console.log(req.query.type);
         console.log(e);
       });
 
-
-
-
 });
 
 
@@ -350,3 +309,5 @@ console.log(req.query.type);
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
 });
+
+   
