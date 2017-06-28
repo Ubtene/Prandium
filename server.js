@@ -6,8 +6,7 @@ var mongoose = require("mongoose");
 var unirest = require("unirest");
 const yelp = require("yelp-fusion");
 const clientId = "pbRwg0shy1Zy_gUqWLpiYQ";
-const clientSecret =
-  "499HGjfOQVwIUWD9ys11menFEA8Ytu77zNrjRCVJ0qYHUQTdpfqdDKNaR7QDYNPy";
+const clientSecret = "499HGjfOQVwIUWD9ys11menFEA8Ytu77zNrjRCVJ0qYHUQTdpfqdDKNaR7QDYNPy";
 const cors = require("cors");
 var userMeals = require("./models/User.js");
 var unirest = require("unirest");
@@ -42,15 +41,15 @@ var PORT = process.env.PORT || 3000;
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
+    bodyParser.urlencoded({
+        extended: true
+    })
 );
 app.use(bodyParser.text());
 app.use(
-  bodyParser.json({
-    type: "application/vnd.api+json"
-  })
+    bodyParser.json({
+        type: "application/vnd.api+json"
+    })
 );
 
 mongoose.Promise = global.Promise;
@@ -60,11 +59,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/Prandium");
 var db = mongoose.connection;
 
 db.on("error", function(err) {
-  console.log("Mongoose Error: ", err);
+    console.log("Mongoose Error: ", err);
 });
 
 db.once("open", function() {
-  console.log("Mongoose connection successful.");
+    console.log("Mongoose connection successful.");
 });
 
 // app.use(express.static("./public"));
@@ -86,211 +85,218 @@ db.once("open", function() {
 // -------------------------------------------------
 // supply a session 'secret' to hash the session (security measure)
 app.use(
-  session({
-    secret: "mySecret"
-  })
+    session({
+        secret: "mySecret"
+    })
 );
 // initialize the passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function(user, done) {
-  // placeholder for custom user serialization
-  // null is for errors
-  done(null, user);
+    // placeholder for custom user serialization
+    // null is for errors
+    done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-  // placeholder for custom user deserialization.
-  // null is for errors
-  done(null, user);
+    // placeholder for custom user deserialization.
+    // null is for errors
+    done(null, user);
 });
 
 passport.use(
-  new GoogleStrategy(
-    {
-      clientID:
-        "848838294022-7h0tlqrqq67isbjjav949n6uaor9cocl.apps.googleusercontent.com",
-      clientSecret: "Fn43-sWs-iBcdPHPjnBC3zFe",
-      callbackURL: "http://localhost:3000/auth/google/callback"
-    },
-    function(accessToken, refreshToken, profile, cb) {
-      // console.log(accessToken);
+    new GoogleStrategy({
+            clientID: "848838294022-7h0tlqrqq67isbjjav949n6uaor9cocl.apps.googleusercontent.com",
+            clientSecret: "Fn43-sWs-iBcdPHPjnBC3zFe",
+            callbackURL: "http://localhost:3000/auth/google/callback"
+        },
+        function(accessToken, refreshToken, profile, cb) {
+            // console.log(accessToken);
 
-      cb(null, accessToken, profile, refreshToken);
+            cb(null, accessToken, profile, refreshToken);
 
-      var given_name = profile.name.givenName;
+            var given_name = profile.name.givenName;
 
-      var user_id = profile.id;
+            var user_id = profile.id;
 
-      // console.log(user_id);
+            // console.log(user_id);
 
-      CurrentUser["user_id"] = user_id;
+            CurrentUser["user_id"] = user_id;
 
-      CurrentUser["given_name"] = given_name;
+            CurrentUser["given_name"] = given_name;
 
-      app.get("/api/user", function(req, res) {
-        userMeals
-          .find({
-            userID: user_id
-          })
-          .exec(function(err, results) {
-            if (results.length === 0) {
-              var AnObj = {
-                Googleid: user_id
-              };
-              res.send(AnObj);
-            } else {
-              console.log("found a user");
-              res.send({
-                test: "yahoo"
-              });
-            }
-          });
-      });
-    }
-  )
+            app.get("/api/user", function(req, res) {
+                userMeals
+                    .find({
+                        userID: user_id
+                    })
+                    .exec(function(err, results) {
+                        if (results.length === 0) { //if there's no user a user id is sent to the front end else....
+                            var AnObj = {
+                                Googleid: user_id
+                            };
+                            console.log("no user found");
+                            res.send(AnObj);
+                        } else {
+                            console.log("User Found and Data Sent Back to Front End");
+                            res.send({
+                                test: "yahoo" //...else this string is sent, meaning user exists
+                            });
+                        }
+                    });
+            });
+        }
+    )
 );
 
 app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"]
-  })
+    "/auth/google",
+    passport.authenticate("google", {
+        scope: ["profile", "email"]
+    })
 );
 
 app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "/"
-    // failureRedirect: '/',
-  })
+    "/auth/google/callback",
+    passport.authenticate("google", {
+        successRedirect: "/"
+            // failureRedirect: '/',
+    })
 );
 
 app.get("/success", isAuthenticated, function(req, res) {
-  var successObj = {
-    google: true
-  };
-  // console.log(successObj);
-  // res.send(successObj);
-  res.redirect("/");
+    var successObj = {
+        google: true
+    };
+    // console.log(successObj);
+    // res.send(successObj);
+    res.redirect("/");
 });
 
 app.get("/logout", function(req, res) {
-  req.logout();
-  res.redirect("/");
+    req.logout();
+    res.redirect("/");
 });
 
 function isAuthenticated(req, res, next) {
-  if (req.user) return next();
-  // if req.user does not exist redirect them to the fail page.  Here you can either redirect users back to the login page
-  // res.redirect('/fail');
-  console.log("failure");
+    if (req.user) return next();
+    // if req.user does not exist redirect them to the fail page.  Here you can either redirect users back to the login page
+    // res.redirect('/fail');
+    console.log("failure");
 }
 app.use(express.static("./public"));
 
 app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/public/index.html");
+    res.sendFile(__dirname + "/public/index.html");
 });
 
 app.post("/", function(req, res) {
-  var userID = req.body.restrictions.login;
+    var userID = req.body.restrictions.login;
 
-  var userEmail = req.body.restrictions.email;
+    var userEmail = req.body.restrictions.email;
 
-  var password = req.body.restrictions.password;
+    var password = req.body.restrictions.password;
 
-  var preferences = req.body.restrictions.preference;
+    var preferences = req.body.restrictions.preference;
 
-  var restriction = req.body.restrictions.restriction;
+    var restriction = req.body.restrictions.restriction;
 
-  var modifiedRestrictions = restriction.join("+");
+    var modifiedRestrictions = restriction.join("+");
 
-  // end of gathering info, commencing api query
+    console.log('userID', userID);
+    console.log('userEmail', userEmail);
+    console.log('userID', userID);
+    console.log('password', password);
+    console.log('restriction', restriction);
+    console.log('modifiedRestrictions', modifiedRestrictions);
 
-  // These code snippets use an open-source library. http://unirest.io/nodejs
-  var string1 =
-    "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/random?limitLicense=false&number=2&tags=";
-  var string2 = preferences.toLowerCase();
-  console.log(string2);
-  var string3 = string1.concat(string2 + "+");
-  var string4 = string3.concat(modifiedRestrictions);
-  console.log(string4);
-  unirest
-    .get(string4)
-    .header(
-      "X-Mashape-Key",
-      "RdXEu67LNZmshdxsrbAGe3gh9fAKp1VdlhxjsnnRI93ldi2bTU"
-    )
-    .header("Accept", "application/json")
-    .end(function(result) {
-      var mealPlanArray = [];
+    // end of gathering info, commencing api query
 
-      for (i = 0; i < 7; i++) {
-        mealPlanArray.push(result.body.recipes[i]);
-      }
+    // These code snippets use an open-source library. http://unirest.io/nodejs
+    var string1 = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/random?limitLicense=false&number=2&tags=";
+    var string2 = preferences.toLowerCase();
+    console.log('string2:', string2);
+    var string3 = string1.concat(string2 + "+");
+    var string4 = string3.concat(modifiedRestrictions);
+    console.log('string4:', string4);
+    unirest
+        .get(string4)
+        .header(
+            "X-Mashape-Key",
+            "RdXEu67LNZmshdxsrbAGe3gh9fAKp1VdlhxjsnnRI93ldi2bTU"
+        )
+        .header("Accept", "application/json")
+        .end(function(result) {
+            var mealPlanArray = [];
+            console.log('mealPlanArray, line 224', mealPlanArray);
 
-      userMeals.create(
-        {
-          userID: userID,
-          userEmail: userEmail,
-          password: password,
-          meals: mealPlanArray,
-          preferences: preferences,
-          restrictions: "dairy",
-          days: [],
-          date: Date.now()
-        },
-        function(err, data) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("saved your meals");
-            res.send(data);
-          }
-        }
-      );
-    });
+            for (i = 0; i < 7; i++) {
+                mealPlanArray.push(result.body.recipes[i]);
+                console.log("recipes", result.body.recipes);
+            }
+            console.log('Meals pushed into MealPlanArray');
+            userMeals.create({
+                    userID: userID,
+                    userEmail: userEmail,
+                    password: password,
+                    meals: mealPlanArray,
+                    preferences: preferences,
+                    restrictions: "dairy",
+                    days: [],
+                    date: Date.now()
+                },
+                function(err, data) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("saved your meals");
+                        res.send(data);
+                        console.log('meals saved to mongo, line 254');
+                    }
+                }
+            );
+        });
 });
 
 app.post("/yelp", function(req, res) {
-  console.log(req.body);
+    console.log(req.body);
 });
 
 app.get("/yelp", function(req, res) {
-  console.log("in/yelpget");
-  // console.log("-------------------------")
-  // console.log("this is in get yelp" + req.body);
-  // console.log("-------------------------")
-  // console.log("Start of the yelp response");
-  console.log(req.query.zipcode);
-  console.log(req.query.type);
-  // Yelp response
+    console.log("in/yelpget");
+    // console.log("-------------------------")
+    // console.log("this is in get yelp" + req.body);
+    // console.log("-------------------------")
+    // console.log("Start of the yelp response");
+    console.log(req.query.zipcode);
+    console.log(req.query.type);
+    // Yelp response
 
-  const searchRequest = {
-    term: req.query.type,
-    location: req.query.zipcode
-  };
+    const searchRequest = {
+        term: req.query.type,
+        location: req.query.zipcode
+    };
 
-  yelp
-    .accessToken(clientId, clientSecret)
-    .then(response => {
-      const client = yelp.client(response.jsonBody.access_token);
+    yelp
+        .accessToken(clientId, clientSecret)
+        .then(response => {
+            const client = yelp.client(response.jsonBody.access_token);
 
-      client.search(searchRequest).then(response => {
-        const firstResult = response.jsonBody.businesses[0];
-        const prettyJson = JSON.stringify(firstResult, null, 4);
-        // console.log(prettyJson);
-        res.send(firstResult);
-        // console.log("End of the Yelp Response");
-      });
-    })
-    .catch(e => {
-      console.log(e);
-    });
+            client.search(searchRequest).then(response => {
+                const firstResult = response.jsonBody.businesses[0];
+                const prettyJson = JSON.stringify(firstResult, null, 4);
+                // console.log(prettyJson);
+                res.send(firstResult);
+                // console.log("End of the Yelp Response");
+            });
+        })
+        .catch(e => {
+            console.log(e);
+        });
 });
 
 // Listener
 app.listen(PORT, function() {
-  console.log("App listening on PORT: " + PORT);
+    console.log("App listening on PORT: " + PORT);
 });
