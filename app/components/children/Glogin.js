@@ -1,3 +1,5 @@
+// Glogin is a module that creates a button with an href to the google route to the server where we initiate the google auth
+
 const React = require('react');
 
 
