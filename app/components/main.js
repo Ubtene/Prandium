@@ -3,6 +3,7 @@ const Userform = require('./children/Userform');
 const Header = require('./children/Header');
 const Yelp = require('./children/Yelp');
 const Login = require('./children/Login');
+import MealsCalendar from './children/MealsCalendar';
 
 {/* currenlty not using the state here for user */}
 class Main extends React.Component{
@@ -27,6 +28,7 @@ userUpdate(user){
     return (
       <div className="container">
       <Header />
+      <MealsCalendar />
 
  
       
