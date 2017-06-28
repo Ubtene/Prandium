@@ -14,10 +14,17 @@ var helper = {
 				preference: preference,
 				restriction: restriction
 			}
-		});
+		}).then((data) => console.log('WHAT YOU GET AFTER SENDING YOUR LOGIN INFO:',data));
 		// commented out this console log statement because it is unreachable due to the return keyword above. It won't execute
 		// console.log("in postHistory");
 	},
+
+	// getMealPlan (user_id) {
+	// 	return axios.get()
+	// }
+
+	// ****************************************YELP API CALLS BELLOW*******************************************
+	
 	// this form is sending info for yelp search ****** this might not be needed  ***************
 	postYelp(zipcode, restaurantType) {
 		console.log("yelp");
@@ -28,11 +35,6 @@ var helper = {
 			}
 		});
 	},
-	
-	
-	
-
-	// ****************************************YELP API CALLS BELLOW*******************************************
 	
 	// this function  passes into to the get route in the server for yelp to process
 	getYelp(zipcode, restaurantType) {
