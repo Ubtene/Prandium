@@ -248,28 +248,28 @@ var preferences = req.body.restrictions.preference;
 console.log(req.body);
 
 
-var restrictions = [];
+var a = req.body.restrictions.restriction;
 
-for (i=0 ; i < req.body.restrictions.restriction.length ; i++) {
+var b = a.join('+');
 
-   restrictions.push(req.body.restrictions.restriction[i]);
-
-}
+console.log(b);
 
 
-var modifiedRestriction = restrictions.toString();
 
-var data =  modifiedRestriction.toString(",");
 
-console.log(data);
+// var modifiedRestriction = restrictions.toString();
 
-theString = "";
+// var data =  modifiedRestriction.toString(",");
 
-for ( i = 0; i<data.length; i++){
-  theString += data[i] + "+";
-}
+// // console.log(data);
 
-console.log(theString);
+// theString = "";
+
+// for ( i = 0; i<data.length; i++){
+//   theString += data[i] + "+";
+// }
+
+// console.log(theString);
 
 
 

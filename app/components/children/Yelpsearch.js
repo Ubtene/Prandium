@@ -18,14 +18,15 @@ class Yelpsearch extends React.Component {
 
         }
 
+        componentDidUpdate() {
         { /* currently not being used  */ }
-        componentDidUpdate() {}
+      }
 
 
 
 
 
-        { /*   */ }
+       
         handleSubmit(event) {
             event.preventDefault();
             console.log(this.props);
@@ -44,12 +45,12 @@ class Yelpsearch extends React.Component {
                 this.setState({ rI: data })
             }.bind(this));
 
-        } { /*  Ends handleSubmit */ }
+        } 
 
 
 
-        { /* this is catching what the user is typeing and setting state to match user input  need handlesubmit to send the data at a certain point to   */ }
         handleChange(event) {
+            { /* this is catching what the user is typeing and setting state to match user input  need handlesubmit to send the data at a certain point to   */ }
             const target = event.target;
             const value = target.value;
             const name = target.name;
@@ -59,7 +60,7 @@ class Yelpsearch extends React.Component {
             });
 
             console.log(this.state);
-        } { /* Ends handleChange  */ }
+        } 
 
 
           render() {

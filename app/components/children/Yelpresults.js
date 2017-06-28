@@ -1,10 +1,9 @@
 var React = require("react");
 var helpers = require('./../utils/helpers.js');
 
-
+{ /* here is where setup our initial state that we will update with our results image has a default so when it's waiting for the update it's not blank  */ }
 class Yelpresults extends React.Component {
 
-        { /* here is where setup our initial state that we will update with our results image has a default so when it's waiting for the update it's not blank  */ }
         constructor(props) {
             super(props);
             this.state = {
@@ -19,11 +18,10 @@ class Yelpresults extends React.Component {
         }
 
 
-        {
-            /*  This is being used to clear the state in Yelp to zipcode and term to null, that way when this button is clicked 
-                 which is located underneath the results the app will bring you back to a search bar */
-        }
+
         handleClick(event) {
+            {/*  This is being used to clear the state in Yelp to zipcode and term to null, that way when this button is clicked 
+             which is located underneath the results the app will bring you back to a search bar */}
             event.preventDefault();
             var zipcode = null;
             var term = null;

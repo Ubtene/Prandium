@@ -11,19 +11,18 @@ class Login extends React.Component {
         super(props);
         this.state = {
 
-            id: '',
+            id: "",
             email: ''
 
         };
         this.renderLogin = this.renderLogin.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        this.googleUpdate = this.props.googleUpdate.bind(this);
+        // this.googleUpdate = this.props.googleUpdate.bind(this);
     }
 
 
     handleClick() {
-        this.setState({ google: true });
-        // this.googleUpdate(true);	
+        this.setState({ google: true });	
         console.log("sent helpers google");
     }
 
@@ -78,11 +77,12 @@ class Login extends React.Component {
 
 
     render() {
-        return ( < div >
-
+        return ( 
+            <div>
             { /* if we have a state.id set then we will render the userform otherwise we will render the googlelogin button  */ }
 
-            { this.state.id ? < Userform / > : < GLogin / > } < /div>	
+            {this.state.id ? <Userform / > : <GLogin / > }
+             </div>	
         )
     }
 

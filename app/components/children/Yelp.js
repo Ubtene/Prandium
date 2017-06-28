@@ -18,11 +18,14 @@ class Yelp extends React.Component {
   {/*  here we bind all functions we will be using to this so we can use them  */}
    this.handleSubmit = this.handleSubmit.bind(this);
    this.resetSubmit = this.resetSubmit.bind(this);
-   this.set = this.set.bind(this);{/*  ************might not need this function not being called anywhere***************** */}
+   this.set = this.set.bind(this);
+ {/*  ************might not need this function not being called anywhere***************** */}
   }
 
-{/* this function will take in two paramaters and set state for zipcode and the search term to the state  */}
+
   handleSubmit(zipcode, term){
+  {/* this function will take in two paramaters and set state for zipcode and the search term to the state  */}
+
   event.preventDefault();
   console.log('I love react....');
   this.setState({
@@ -31,17 +34,19 @@ class Yelp extends React.Component {
 }
 
 
+
+	set(info){
   {/* this is currenlty not in use this was going to hold the restaurants info and pass it back to this component this may come out of the program it was being passed to 
   yelpsearch  */}
-	set(info){
 	console.log("in setRestaurantInfo");	
 	this.setState({restaurantInfo: info})
 	
 	}
 
-{/*  here we're passing a function where we can reset the state to undefined and get the state back to null so we can render the search page again. 
-this may not be needed and I'll look into taking this out */}
+
 resetSubmit(zipcode, term){
+  {/*  here we're passing a function where we can reset the state to undefined and get the state back to null so we can render the search page again. 
+this may not be needed and I'll look into taking this out */}
 	event.preventDefault();
 	this.setState({
 	zipcode: zipcode, term: term
