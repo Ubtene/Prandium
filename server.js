@@ -266,37 +266,40 @@ app.post('/yelp', function(req,res){
 });
 
 
-// THIS IS THE BRAD AND BUTTER OF THE YELP APP
-app.get("/yelp", function(req,res){
-  console.log('in/yelpget');
-  console.log(req.query.zipcode);
-  console.log(req.query.type);
 
-  // this is taking the information from the front end and then saving it into an object to send throught the yelp api to 
-  // for a restaurant returned
+app.get("/yelp", function(req,res){
+console.log('in/yelpget');
+// console.log("-------------------------")
+// console.log("this is in get yelp" + req.body);
+// console.log("-------------------------")
+// console.log("Start of the yelp response");
+console.log(req.query.zipcode);
+console.log(req.query.type);
+        // Yelp response
+
   const searchRequest = {
   term: req.query.type,
   location: req.query.zipcode
   
 };
 
-      
-  yelp.accessToken(clientId, clientSecret).then(response =>  
-  {
-        const client = yelp.client(response.jsonBody.access_token);
 
-        client.search(searchRequest).then(response => 
-        {
-          const firstResult = response.jsonBody.businesses[0];
-          const prettyJson = JSON.stringify(firstResult, null, 4);
-          // console.log(prettyJson);
-          res.send(firstResult);
-          // console.log("End of the Yelp Response");
-        });
-  }).catch(e => 
-  {
-    console.log(e);
-  });
+      yelp.accessToken(clientId, clientSecret).then(response =>  
+      {
+            const client = yelp.client(response.jsonBody.access_token);
+
+            client.search(searchRequest).then(response => 
+            {
+              const firstResult = response.jsonBody.businesses[0];
+              const prettyJson = JSON.stringify(firstResult, null, 4);
+              // console.log(prettyJson);
+              res.send(firstResult);
+              // console.log("End of the Yelp Response");
+            });
+      }).catch(e => 
+      {
+        console.log(e);
+      });
 
 });
 
