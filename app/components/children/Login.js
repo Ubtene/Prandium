@@ -14,14 +14,17 @@ class Login extends React.Component {
       id: "",
       email: ""
     };
-    this.renderLogin = this.renderLogin.bind(this);
     this.handleClick = this.handleClick.bind(this);
+
+    // unused functions commented out bellow
+    // this.renderLogin = this.renderLogin.bind(this); /
     // this.googleUpdate = this.props.googleUpdate.bind(this);
   }
 
   handleClick() {
     this.setState({ google: true });
     console.log("sent helpers google");
+    console.log('How state looks when handleClick is clicked: ', this.state);
   }
 
   componentWillMount() {
@@ -29,32 +32,32 @@ class Login extends React.Component {
 
     helpers.getGoogle().then(
       function(result) {
-        console.log(result);
+        console.log('Results from helpers.getGoogle Promise in the ComponentWillMount func:', result);
 
         this.setState({
           id: result.data.Googleid
         });
 
-        // console.log("no user data");
+        console.log('how id property looks when compWillMount func is called:', this.state.id);
       }.bind(this)
     );
     // console.log(this.state);
   }
 
-  componentWillUnmount() {}
+//   componentWillUnmount() {}
 
   componentDidUpdate() {
     console.log("----------------");
 
-    console.log("in login componentDidUpdate");
-    console.log(this.state);
+    console.log("in login componentDidUpdate", this.state);
 
     console.log("----------------");
   }
 
-  renderLogin() {}
+//   renderLogin() {}
 
   render() {
+      console.log(`the appearance of the rendered component's object`, this);
     return (
       <div>
         {/* if we have a state.id set then we will render the userform otherwise we will render the googlelogin button  */}
