@@ -2,7 +2,7 @@ const React = require('react');
 const helpers = require('./../utils/helpers.js');
 const Yelp = require('./Yelp');
 const GLogin = require('./Glogin');
-
+const Userform = require('./Userform');
 
 class Login extends React.Component {
 constructor(props){
@@ -32,9 +32,9 @@ componentWillMount(){
 
 		console.log(result);
  
-		// this.setState({
-		// 	id: result.data.Googleid,
-		// });
+		this.setState({
+			id: result.data.Googleid
+		});
 
 
 	// console.log("no user data");
@@ -78,7 +78,7 @@ renderLogin(){
 render(){
 	return (
 	<div>
-	{this.state.id ? <Yelp /> : <GLogin />}
+	{this.state.id ? <Userform /> : <GLogin />}
 	</div>	
 	)		
 }
