@@ -82,8 +82,8 @@ class Query extends React.Component {
 
     {/* Here we're calling the postform function from the helpers file and sending the data from the form to the back end and setting up a promise  */}
       helpers.postForm(this.state.login, this.state.email, this.state.password, this.state.preferences, this.state.restrictions).then(function(result){
-
-        console.log(result);
+        console.log(this.state.peanut)
+        // console.log(result);
 
       });
     {/* setting initial state for component so we can pass this to the server once the form is filled  */}
