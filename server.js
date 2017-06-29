@@ -243,7 +243,7 @@ console.log(modifiedRestrictions);
                     password: password,
                     meals:mealPlanArray,
                     preferences: preferences,
-                    restrictions: restrictions,
+                    restrictions: restriction,
                     days:[],
                     date: Date.now()
                 }, function (err, data) {
