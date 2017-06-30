@@ -24,6 +24,9 @@
         <input type="checkbox" name="particularRestrictions"></input>
         <input type="hidden" name="user" value="">
         <button id="button">Go</button>
+        <button id="button2"> Remove </button>
+
+
     </form>
 
 </body>
@@ -49,8 +52,10 @@
         });
 
 
-        $("#button").on("click", function () {
+        $("#button").on("click", function (event) {
 
+
+            event.preventDefault();
 
             //  var geocoder = new google.maps.Geocoder;
 
@@ -81,16 +86,16 @@
 
             $("#checks :checked").each(function () {
 
-            var dayObj = { day : $(this).val(),
+            var dayObj = { day : $(this).attr('name')
                }
+
+               console.log(dayObj);
 
                 daysArray.push(dayObj);
 
             });
 
             var user2 = $("[name=user]").val();
-
-            console.log(user2);
 
             var preferences = $("[name=generalRestrictions]").val();
 
@@ -114,27 +119,61 @@
 
                 type: "POST",
                 data: obj,
-                url: "/api/userdatabase"
+                url: "/api/userdatabase",
+                success: function (data) {
 
-            }).done(function (req, res) {
+                var meow =  data;
 
-            var foodForDays = res;
-
-            for (i=0 ; i <foodForDays.length; i++) {
-   
-             console.log(foodForDays[0]); 
-
-
-            }
+                console.log(meow);
+             
+              }
 
 
             });
 
 
 
+            $("#button2").on("click" , function (event) {
+
+            event.preventDefault();
+
+            var obj2 = [ {
+
+                day: "Wednesday",
+                meal:"corn"
+            } ];
+
+            $.ajax({
+
+             type:"GET",
+             data:obj2,
+             url:"/api/remove",
+             success: function (data) {
+
+                 console.log(data);
+             }
+
+
+
+            })
+
         });
 
+    
+
     });
+
+});
+
+
+            // for (i=0 ; i <foodForDays.length; i++) {
+   
+            //  console.log(foodForDays[i]); 
+
+
+            // }
+
+      
 </script>
 
 </html>

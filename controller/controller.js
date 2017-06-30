@@ -30,21 +30,21 @@ module.exports = function(app) {
         var password = req.body.password
         var days = req.body.days
 
-        console.log("running spoonacular");
 
         // These code snippets use an open-source library. http://unirest.io/nodejs
         unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/random?limitL" +
-                "icense=false&number=100&tags=" + preferences + "%2C" + restrictions)
+                "icense=false&number=3&tags=" + preferences + "%2C" + restrictions)
             .header("X-Mashape-Key", "RdXEu67LNZmshdxsrbAGe3gh9fAKp1VdlhxjsnnRI93ldi2bTU")
             .header("Accept", "application/json")
             .end(function(result) {
 
+                var newObj = JSON.parse(result.raw_body);
+
                 var mealPlanArray = [];
 
-                for (i = 0; i < 99; i++) {
+                for (i = 0; i < newObj.recipes.length; i++) {
 
-                    mealPlanArray.push(result.body.recipes[i]);
-
+                    mealPlanArray.push(newObj.recipes[i]); 
                 }
 
                 // MongoDB configuration (Change this URL to your own DB)
@@ -67,49 +67,75 @@ module.exports = function(app) {
                     meals: mealPlanArray,
                     preferences: preferences,
                     restrictions: restrictions,
-                    days: days,
+                    mealsForTheWeek: days,
                     date: Date.now()
                 }, function(err) {
                     if (err) {
                         console.log(err);
                     } else {
 
-                        console.log("saved your meals");
-
                         userMeals.find({ userID: userID }).exec(function(err, results) {
-
-
 
                             var mealProperty = results[0].meals;
 
                             for (i = 0; i < days.length; i++) {
 
-                                var number = Math.floor(Math.random() * 100);
+                             var number = Math.floor(Math.random() * 100);
 
-                                days[i].meal = mealProperty[number];
-                                days[i].meal2 = mealProperty[number + 1];
-                                days[i].meal3 = mealProperty[number + 2];
+                                days[i].meal = mealProperty[i];
 
-                                console.log(mealProperty[2]);
+                                // days[i].meal2 = mealProperty[number];
+                                // days[i].meal2 = mealProperty[number + 1];
+                                // days[i].meal3 = mealProperty[number + 2];
 
-                                // commence shiffling
+                            }
+
+                         
+
+                            //end of for loop
+
+                            //update mongo for persistence
+
+
+                            userMeals.update({userID: userID}) , {$set: {mealsForTheWeek: []}} , function (err, result) {
+
+                                    console.log(err);
+
+                            }
+
+                            console.log(days);
+
+                            userMeals.update({userID: userID}) , {$set: {mealsForTheWeek : days}} , function (err, result) {
+
+                                console.log(err);
+                            }
+                            
+                            //send things back
+
+                            var daysObject = {
+
+                                userDays: days,
+                            }
+
+                            console.log("sending the object");
+
+                             res.json(daysObject);
+
+                            // commence shiffling
 
                                 var shuffledMeals = _.shuffle(mealProperty);
-
-                                console.log(shuffledMeals[2]);
 
                                 userMeals.update({ userID: userID }, { $set: { "meals": shuffledMeals }});
 
                                  userMeals.findOne({ userID: userID }, "meals" , function (err, meals){
 
-                                    console.log(meals);
+                                    console.log(err);
 
                                  });
 
-                                //end of for loop
-                            }
+                            
 
-                            res.json(days);
+                           
 
 
                         });
@@ -121,6 +147,15 @@ module.exports = function(app) {
 
         //end of spoonacular query
     });
+
+     app.get("/api/remove" , function (req, res) {
+
+     var newInfo = req.body;
+
+     console.log(newInfo.meal);
+
+
+     });
 
     //exporting
 };
