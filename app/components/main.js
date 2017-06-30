@@ -4,14 +4,15 @@ const Header = require('./children/Header');
 const Yelp = require('./children/Yelp');
 const Login = require('./children/Login');
 import MealsCalendar from './children/MealsCalendar';
+import CentralPage from './children/CentralPage';
 
 {/* currenlty not using the state here for user */}
 class Main extends React.Component{
 constructor(props){
 super(props);  
 this.state={
-  user: ""
-}
+  isLoggedIn: false
+};
 
 this.userUpdate = this.userUpdate.bind(this);
 
@@ -19,7 +20,7 @@ this.userUpdate = this.userUpdate.bind(this);
 
 userUpdate(user){
   this.setState({user: user});
-  console.log('googleupdated');
+  console.log('google updated');
 }
 
 
@@ -28,8 +29,7 @@ userUpdate(user){
     return (
       <div className="container">
       <Header />
-      <MealsCalendar />
-
+      
  
       
       {/*This is our main component and we will need to specify what we're going to render here depending on what information is present.
@@ -37,7 +37,7 @@ userUpdate(user){
         running app components in it.  So you will either get the first instance of our main app or the login screen..... we will need to pass the user state
         using function to run on submit to pass user info back here so we can pass it around as props for the app.
       */}
-      {this.state.user ? <Yelp />  : <Login />}
+      {this.state.user ? <CentralPage /> : <Login />}
 
   
       </div>

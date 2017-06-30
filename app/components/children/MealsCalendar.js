@@ -1,6 +1,6 @@
 import React from "react";
 import Day from './Day.js';
-
+import Yelp from './Yelp';
 
     const week = [
       {
@@ -133,8 +133,13 @@ class MealsCalendar extends React.Component {
   render() {
     return (
       <div className="calendar-wrapper">
-        {this.createDay()}
-        This is a Component
+          <div>
+            {this.createDay()}
+          </div>
+          <div>
+              <Yelp />
+          </div>
+            
       </div>
     );
   }
