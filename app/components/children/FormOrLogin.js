@@ -16,28 +16,15 @@ class FormOrLogin extends React.Component {
         }
 
         this.userLogin = this.userLogin.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
     }
 
 
 
 
-    handleClick() {
-        this.setState({ google: true });	
-        console.log("sent helpers google");
-    }
+  
 
 
-
-    componentWillMount() {
-        console.log("in Willmount on login component");
-        helpers.getGoogle().then(function(result) {
-            console.log(result);
-            this.setState({
-                id: result.data.Googleid
-            });
-        }.bind(this));
-    }
 
     userLogin(isLoggedIn){
         this.setState({
@@ -54,7 +41,7 @@ class FormOrLogin extends React.Component {
 
     componentDidUpdate() {
         console.log("----------------");
-        console.log("in login componentDidUpdate");
+        console.log("in form or login componentDidUpdate");
         console.log(this.state);
         console.log("----------------");
         console.log('this below should be false originally');

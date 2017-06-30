@@ -27,7 +27,7 @@ render(){
 		<div className="container row">
 			<GoogleLogin userLogin={this.props.userLogin} />
 		</div>
-
+		
 
 		</div>
 		)
