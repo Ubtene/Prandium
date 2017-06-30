@@ -2,7 +2,7 @@ const React = require('react');
 const Userform = require('./children/Userform');
 const Header = require('./children/Header');
 const Yelp = require('./children/Yelp');
-const Login = require('./children/Login');
+const FormOrLogin = require('./children/FormOrLogin');
 
 {/* currenlty not using the state here for user */}
 class Main extends React.Component{
@@ -35,7 +35,7 @@ userUpdate(user){
         running app components in it.  So you will either get the first instance of our main app or the login screen..... we will need to pass the user state
         using function to run on submit to pass user info back here so we can pass it around as props for the app.
       */}
-      {this.state.user ? <Yelp />  : <Login />}
+      {this.state.user ? <Yelp />  : <FormOrLogin />}
 
   
       </div>

@@ -259,11 +259,11 @@ console.log(modifiedRestrictions);
 
 });
 
-app.post('/yelp', function(req,res){
+// app.post('/yelp', function(req,res){
 
-  console.log(req.body);
+//   console.log(req.body);
 
-});
+// });
 
 
 
@@ -301,6 +301,19 @@ console.log(req.query.type);
         console.log(e);
       });
 
+});
+
+
+app.post("/localuser", function(req, res){
+  console.log("----------------------");
+  console.log(req.params);
+  console.log(req.query);
+  console.log(req.body);
+  // var myreq = req.body;
+  console.log("----------------------");
+
+  res.send('true');
+  // res.send(myreq);
 });
 
 

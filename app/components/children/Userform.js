@@ -12,7 +12,7 @@ var names = ["peanut", "dairy", "wheat", "pork", "soy", "fish", "shellfish"];
 
 {/* Builds a form and takes in data that is sent back to the server to build a user*/}
 
-class Query extends React.Component {
+class UserSurvey extends React.Component {
 
   constructor(props){
     super(props);
@@ -209,4 +209,4 @@ class Query extends React.Component {
 }
 
 
-module.exports = Query;
+module.exports = UserSurvey;

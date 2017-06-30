@@ -8,7 +8,7 @@ const Nav = require('./../components/children/Nav');
 const Header = require('./../components/children/Header');
 const Form = require("./../components/children/Userform");
 const Yelp = require('./../components/children/Yelp');
-const Login = require('./../components/children/Login');
+
 
 
 {/*  this is setting up the routes for our app/ we currently are not using this as of 6/27/17 this may change to inclue a link back to change preferences or user info
@@ -30,7 +30,7 @@ class Routes extends React.Component {
 						<Route exact path='/' component={Login}/>
 						<Route path='/header' component={Header}/>
 						<Route path='/yelp' component={Form}/>
-						<Route path='/login' component={Login}/>
+
 	 				</Switch>
 					</div>
 

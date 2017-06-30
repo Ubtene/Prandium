@@ -1,24 +1,25 @@
 const React = require('react');
 const helpers = require('./../utils/helpers.js');
 const Yelp = require('./Yelp');
-const GLogin = require('./Glogin');
+const MainLogin = require('./MainLogin');
 const Userform = require('./Userform');
-
+const GoogleLogin = require('./GoogleLogin');
 
 { /*  this component builds out our login.  Pulls in the google login button and if user is not present in state will render the userform if not will ultimately sign into app  */ }
-class Login extends React.Component {
+class FormOrLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
             id: "",
-            email: ''
+            email: '',
+            isLoggedIn: ''
+        }
 
-        };
-        this.renderLogin = this.renderLogin.bind(this);
+        this.userLogin = this.userLogin.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        // this.googleUpdate = this.props.googleUpdate.bind(this);
     }
+
+
 
 
     handleClick() {
@@ -26,26 +27,25 @@ class Login extends React.Component {
         console.log("sent helpers google");
     }
 
+
+
     componentWillMount() {
         console.log("in Willmount on login component");
-
         helpers.getGoogle().then(function(result) {
-
             console.log(result);
-
             this.setState({
                 id: result.data.Googleid
             });
-
-
-            // console.log("no user data");
-
         }.bind(this));
-        // console.log(this.state);
-
     }
 
-
+    userLogin(isLoggedIn){
+        this.setState({
+            isLoggedIn: isLoggedIn
+        })
+    console.log("in form or login");
+   
+    }
 
 
     componentWillUnmount() {
@@ -53,36 +53,26 @@ class Login extends React.Component {
     }
 
     componentDidUpdate() {
-
-
-
-
-
-
         console.log("----------------");
-
         console.log("in login componentDidUpdate");
         console.log(this.state);
-
         console.log("----------------");
-
+        console.log('this below should be false originally');
+         console.log(this.state.isLoggedIn);
     }
 
 
 
 
-    renderLogin() {
-
-    }
 
 
-    render() {
+    render(){
         return ( 
-            <div>
-            { /* if we have a state.id set then we will render the userform otherwise we will render the googlelogin button  */ }
 
-            {this.state.id ? <Userform / > : <GLogin / > }
-             </div>	
+            <div>        
+           {this.state.isLoggedIn ? <Userform /> : <MainLogin userLogin={this.userLogin} /> }
+           </div>
+        
         )
     }
 
@@ -92,4 +82,4 @@ class Login extends React.Component {
 
 
 
-module.exports = Login;
+module.exports = FormOrLogin;
