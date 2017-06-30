@@ -103,8 +103,6 @@ module.exports = function(app) {
 
                             }
 
-                            console.log(days);
-
                             userMeals.update({userID: userID}) , {$set: {mealsForTheWeek : days}} , function (err, result) {
 
                                 console.log(err);
@@ -125,13 +123,19 @@ module.exports = function(app) {
 
                                 var shuffledMeals = _.shuffle(mealProperty);
 
-                                userMeals.update({ userID: userID }, { $set: { "meals": shuffledMeals }});
+                                userMeals.update({ userID: userID }, { $set: { "meals": shuffledMeals }}).then(function (doc){
 
-                                 userMeals.findOne({ userID: userID }, "meals" , function (err, meals){
+                                userMeals.findOne({ userID: userID }, "meals" , function (err, meals){
 
                                     console.log(err);
 
                                  });
+
+
+
+                                });
+
+                                
 
                             
 
@@ -141,6 +145,29 @@ module.exports = function(app) {
                         });
 
                     }
+
+
+    app.post("/api/remove" , function (req, res) {
+
+     var newInfo = req.body;
+     
+     userMeals.update({userID: userID} , {$set:{ "mealsForTheWeek": []}}).then(function (doc){
+
+         console.log(doc);
+
+        userMeals.update({'userID':userID} , {$set:{"mealsForTheWeek": newInfo}}).then(function (doc){
+
+            console.log(doc);
+        });
+
+     });
+
+
+     });
+
+
+
+                //end of mongo creation done function
                 });
 
             });
@@ -148,14 +175,6 @@ module.exports = function(app) {
         //end of spoonacular query
     });
 
-     app.get("/api/remove" , function (req, res) {
-
-     var newInfo = req.body;
-
-     console.log(newInfo.meal);
-
-
-     });
 
     //exporting
 };

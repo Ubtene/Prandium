@@ -135,17 +135,20 @@
 
             $("#button2").on("click" , function (event) {
 
-            event.preventDefault();
+           event.preventDefault();
 
-            var obj2 = [ {
+           console.log("button clicked");
 
+            var obj2 =  {
                 day: "Wednesday",
                 meal:"corn"
-            } ];
+            } 
+
+            console.log(obj2);
 
             $.ajax({
 
-             type:"GET",
+             type:"POST",
              data:obj2,
              url:"/api/remove",
              success: function (data) {
@@ -164,14 +167,6 @@
     });
 
 });
-
-
-            // for (i=0 ; i <foodForDays.length; i++) {
-   
-            //  console.log(foodForDays[i]); 
-
-
-            // }
 
       
 </script>
