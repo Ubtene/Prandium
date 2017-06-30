@@ -1,5 +1,6 @@
   var mongoose = require("mongoose");
    // var uniqueValidator = require('mongoose-unique-validator');
+   passportLocalMongoose = require("passport-local-mongoose");
 
     var Schema = mongoose.Schema;
 
@@ -39,6 +40,9 @@
       });
 
       // MealSchema.plugin(uniqueValidator);
+      
+      //Using this plugin to make a Passport Local SignUp and Sign-IN
+      MealSchema.plugin(passportLocalMongoose);
 
 
     var userMeals = mongoose.model("userMeals", MealSchema);

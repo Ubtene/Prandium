@@ -14,6 +14,7 @@ var unirest = require("unirest");
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var CurrentUser = {};
 
@@ -102,6 +103,11 @@ passport.deserializeUser(function(user, done) {
     done(null, user);
 });
 
+//Passport Authentication LOCALSTRATEGY
+passport.use(new LocalStrategy(userMeals.authenticate()));
+passport.serializeUser(userMeals.serializeUser());
+passport.deserializeUser(userMeals.deserializeUser());
+
 
 passport.use(new GoogleStrategy({
     clientID: "848838294022-7h0tlqrqq67isbjjav949n6uaor9cocl.apps.googleusercontent.com",
@@ -153,6 +159,15 @@ passport.use(new GoogleStrategy({
 }));
 
 
+//A login Get route
+app.get('/login', function(req, res) {
+      res.render('login', { userMeals : req.userID });
+  });
+
+//A POST route to login.
+app.post('/login', passport.authenticate('local'), function(req, res) {
+      res.redirect('/');
+  });
 
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -190,10 +205,15 @@ function isAuthenticated(req, res, next) {
 
 app.use(express.static("./public"));
 
-app.get("/", function(req,res){
+// app.get("/", function(req,res){
 
-	    res.sendFile(__dirname + "/public/index.html");
-})
+// 	    res.sendFile(__dirname + "/public/index.html");
+// });
+
+app.get("/test", function(req,res){
+
+	    res.sendFile(__dirname + "/public/login.html");
+});
 
 
 

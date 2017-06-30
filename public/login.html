@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="row">
+        <div class="span4 offset4">
+            <div class="well">
+                <legend>Sign in to WebApp</legend>
+                <form method="POST" action="/login" accept-charset="UTF-8">
+                    <div class="alert alert-error">
+                        <a class="close" data-dismiss="alert" href="#">x</a>
+                        Incorrect Username or Password!
+                    </div>
+                    <input class="span3" placeholder="Username" type="username" name="username">
+                    <input class="span3" placeholder="Password" type="password" name="password">
+                    <label class="checkbox">
+                        <input type="checkbox" name="remember" value="1">Remember Me</label>
+                    <button class="btn-info btn" type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
