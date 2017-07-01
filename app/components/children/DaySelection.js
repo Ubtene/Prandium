@@ -89,7 +89,13 @@ class DaySelection extends React.Component {
 
       //******API CALL GOES HERE******
       //...OR WE MAY HAVE TO SET UP THE 'ACTION' AND 'METHOD' ATTRIBUTES IN THE FORM ELEMENT ON LINE-62 BELOW 
-      alert(this.selectedCheckboxes);
+    //   alert(this.selectedCheckboxes);
+    let user_id = 'Juan'
+    let daysToSend = {
+        daysSelected: []
+    }
+    this.selectedCheckboxes.forEach((day) => daysToSend.daysSelected.push({day: day, user_id}));
+     console.log('Days Selected:', daysToSend);
   }
 
   render() {
