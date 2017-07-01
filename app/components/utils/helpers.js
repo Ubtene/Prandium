@@ -56,7 +56,15 @@ var helper = {
 			console.log(result);
 			return result;
 		});
+		},
+	getLocal(user, password){
+		return axios.post('/localuser', {user: user, password: password}).then(function(result){
+			console.log(result);
+			return result
+
+})
 	}
+
 };
 
 module.exports = helper;

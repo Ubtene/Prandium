@@ -13,8 +13,9 @@ var names = ["peanut", "dairy", "wheat", "pork", "soy", "fish", "shellfish"];
   /* Builds a form and takes in data that is sent back to the server to build a user*/
 }
 
-class Query extends React.Component {
-  constructor(props) {
+class UserSurvey extends React.Component {
+
+  constructor(props){
     super(props);
     this.state = {
       login: "",
@@ -68,53 +69,25 @@ class Query extends React.Component {
   }
 
   handleSubmit(event) {
-    {
-      /* // this is called when you submit the form, it will then send an object to the server with the users information*/
-    }
-    event.preventDefault();
-    var options = [
-      "peanut",
-      "dairy",
-      "wheat",
-      "pork",
-      "soy",
-      "fish",
-      "shellfish"
-    ];
-    var restrictions = this.state.restrictions;
-    var term = [
-      this.state.peanut,
-      this.state.dairy,
-      this.state.wheat,
-      this.state.pork,
-      this.state.soy,
-      this.state.fish,
-      this.state.shellfish
-    ];
+       {/* // this is called when you submit the form, it will then send an object to the server with the users information*/}
+        event.preventDefault(); 
+        var options = ["peanut", "dairy", "wheat", "pork", "soy", "fish", "shellfish"];
+        var restrictions = this.state.restrictions;
+        var term = [this.state.peanut, this.state.dairy, this.state.wheat, this.state.pork, this.state.soy, this.state.fish, this.state.shellfish];
 
-    for (var i = 0; i < options.length; i++) {
-      if (term[i]) {
-        restrictions.push(options[i]);
-      }
-    }
+        for(var i = 0; i < options.length; i++){
+            if(term[i]){
+              restrictions.push(options[i]);
+            }
+        }
 
-    this.setState({ restrictions: restrictions });
+      this.setState({restrictions: restrictions});
 
-    {
-      /* Here we're calling the postform function from the helpers file and sending the data from the form to the back end and setting up a promise  */
-    }
+    {/* Here we're calling the postform function from the helpers file and sending the data from the form to the back end and setting up a promise  */}
+      helpers.postForm(this.state.login, this.state.email, this.state.password, this.state.preferences, this.state.restrictions).then(function(result){
+        console.log(this.state.peanut)
+        // console.log(result);
 
-    
-    helpers
-      .postForm(
-        this.state.login,
-        this.state.email,
-        this.state.password,
-        this.state.preferences,
-        this.state.restrictions
-      )
-      .then(function(result) {
-        console.log('RESULTS FROM THE POST FORM IN THE <Userform /> COMPONENT UPON SUBMISSION:',result);
       });
     {
       /* setting initial state for component so we can pass this to the server once the form is filled  */
@@ -253,4 +226,5 @@ class Query extends React.Component {
   }
 }
 
-module.exports = Query;
+
+module.exports = UserSurvey;

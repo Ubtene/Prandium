@@ -144,3 +144,12 @@ span{
 
 
 
+.googleLogin {
+    background-color: dodgerblue;
+    width: 100%;
+}
+
+#googleLoginDiv{
+    text-align: center;
+
+}
