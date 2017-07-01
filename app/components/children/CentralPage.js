@@ -12,6 +12,17 @@ class CentralPage extends React.Component {
         };
     }
 
+    mealCheck () {
+
+        // Do axios call to see if user has meal plan
+        //Get user data and if 'data.mealsForTheWeek's length is 0 then set state to false
+        //otherwise set it to true
+
+        if (mealPlan) {
+            this.setState({hasMeals:true});
+        }
+    }
+    
     render() {
         return (
             <div className='central-page'>
