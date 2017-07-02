@@ -5,7 +5,6 @@ var helper = {
 	//this form is sending user credentials to sign up
 	postForm(login, email, password, preference, restriction) {
 		console.log("data to send to backend from the sign-up form", arguments);
-		// console.log("in here at top");
 		return axios.post("/", {
 			restrictions: {
 				login: login,
@@ -15,13 +14,17 @@ var helper = {
 				restriction: restriction
 			}
 		}).then((data) => console.log('WHAT YOU GET AFTER SENDING YOUR LOGIN INFO:',data));
-		// commented out this console log statement because it is unreachable due to the return keyword above. It won't execute
-		// console.log("in postHistory");
 	},
 
-	// getMealPlan (user_id) {
-	// 	return axios.get()
-	// }
+	// ===========axios call to allow user to specify days (using checkboxes)=========
+	//it receives an array of objects
+	specifyDays(user_id, days) {
+		axios.post(`/user/${user_id}`, days)
+      .then((data) => {
+          console.log(data);
+      });
+	}
+
 
 	// ****************************************YELP API CALLS BELLOW*******************************************
 	
