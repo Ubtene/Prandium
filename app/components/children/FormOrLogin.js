@@ -26,13 +26,13 @@ class FormOrLogin extends React.Component {
 
 
 
-    userLogin(isLoggedIn){
-        this.setState({
-            isLoggedIn: isLoggedIn
-        })
-    console.log("in form or login");
+    // userLogin(isLoggedIn){
+    //     this.setState({
+    //         isLoggedIn: isLoggedIn
+    //     })
+    // console.log("in form or login");
    
-    }
+    // }
 
 
     componentWillUnmount() {
@@ -56,8 +56,9 @@ class FormOrLogin extends React.Component {
     render(){
         return ( 
 
-            <div>        
-           {this.state.isLoggedIn ? <Userform /> : <MainLogin userLogin={this.userLogin} /> }
+            <div>   
+            {/*     
+           {this.state.isLoggedIn ? <Userform /> : <MainLogin userLogin={this.userLogin} /> }*/}
            </div>
         
         )

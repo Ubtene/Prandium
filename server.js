@@ -306,8 +306,7 @@ console.log(req.query.type);
 
 app.post("/localuser", function(req, res){
   console.log("----------------------");
-  console.log(req.params);
-  console.log(req.query);
+
   console.log(req.body);
   // var myreq = req.body;
   console.log("----------------------");

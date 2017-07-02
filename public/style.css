@@ -153,3 +153,42 @@ span{
     text-align: center;
 
 }
+
+
+/*//////////////////////      Day         /////////////////////////////*/
+
+#day-wrapper {
+    /*clear: all;*/
+    width: 13%;
+    float: left;
+    margin-right: 1%;
+    border: 0;
+    padding: 0;
+}
+
+#day-wrapper: last-child {
+    margin-right: 0;
+}
+
+#yelpInMeals {
+    clear: all;
+    border-top: 10px;
+}
+
+
+/*#left {
+    color: red;
+    margin: 0 auto;
+/*    float: left;*/
+    width: 15%;
+  
+}*/
+
+/*#right {
+        color: blue;
+        background-color: red;
+        float: left;
+        clear: both;
+        width: 100%;
+     
+}*/
