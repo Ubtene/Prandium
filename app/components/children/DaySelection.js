@@ -1,5 +1,8 @@
 import React from 'react';
 
+// import function which uses axios to send days
+import {sendDays} from '../utils/helpers';
+
 const week = [
     'Sunday',
     'Monday',
@@ -85,17 +88,17 @@ class DaySelection extends React.Component {
   }
 
   handleSubmitForm (event) {
-      event.preventDefault();
+    event.preventDefault();
+    let user_id = 'Not yet Defined';
 
-      //******API CALL GOES HERE******
-      //...OR WE MAY HAVE TO SET UP THE 'ACTION' AND 'METHOD' ATTRIBUTES IN THE FORM ELEMENT ON LINE-62 BELOW 
-    //   alert(this.selectedCheckboxes);
-    let user_id = 'Juan'
-    let daysToSend = {
-        daysSelected: []
-    }
-    this.selectedCheckboxes.forEach((day) => daysToSend.daysSelected.push({day: day, user_id}));
-     console.log('Days Selected:', daysToSend);
+    let daysSelected = [];
+
+    // make selected days into objects
+    this.selectedCheckboxes.forEach((day) => daysSelected.push({day: day}));
+     console.log('Days Selected:', daysSelected);
+     
+    //  send days using axios calls
+     sendDays(user_id, daysSelected);
   }
 
   render() {
