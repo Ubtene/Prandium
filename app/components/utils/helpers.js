@@ -2,6 +2,8 @@ var axios = require("axios");
 import "whatwg-fetch";
 
 var helper = {
+
+	
 	//this form is sending user credentials to sign up
 	postForm(login, email, password, preference, restriction) {
 		console.log("data to send to backend from the sign-up form", arguments);
@@ -18,14 +20,13 @@ var helper = {
 
 	// ===========axios call to allow user to specify days (using checkboxes)=========
 	//it receives an array of objects
-	specifyDays(user_id, days) {
+	
+	sendDays(user_id, days) {
 		axios.post(`/user/${user_id}`, days)
       .then((data) => {
           console.log(data);
       });
-	}
-
-
+	},
 	// ****************************************YELP API CALLS BELLOW*******************************************
 	
 	// this form is sending info for yelp search ****** this might not be needed  ***************
