@@ -4,6 +4,7 @@ const Header = require("./children/Header");
 const Yelp = require("./children/Yelp");
 const FormOrLogin = require("./children/FormOrLogin");
 import CentralPage from "./children/CentralPage";
+import DaySelection from './children/DaySelection';
 
 // use state for user info
 class Main extends React.Component {
@@ -26,6 +27,7 @@ class Main extends React.Component {
   render() {
     return (
       <div className="container">
+        <DaySelection />
         <Header />
         {/*This is our main component and we will need to specify what we're going to render here depending on what information is present.
         If there is a user then setup a function to take the current user info from google and render the app else we should probably have another file that has our 
