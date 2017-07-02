@@ -22,7 +22,7 @@ var helper = {
 	//it receives an array of objects
 	
 	sendDays(user_id, days) {
-		axios.post(`/user/${user_id}`, days)
+		axios.post(`/user/`, days)
       .then((data) => {
           console.log(data);
       });

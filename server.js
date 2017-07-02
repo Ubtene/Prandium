@@ -334,6 +334,51 @@ app.post("/localuser", function(req, res){
   // res.send(myreq);
 });
 
+app.post("/user/" , function (req, res) {
+
+var userID = "114370910443928643459";
+
+var days = req.body 
+
+
+ userMeals.find({ userID: userID }).exec(function(err, results) {
+
+                            var mealProperty = results[0].meals;
+
+                            for (i = 0; i < days.length; i++) {
+
+                             var number = Math.floor(Math.random() * 100);
+
+                                days[i].meal = mealProperty[i];
+
+                            }
+
+                         
+
+                            //end of for loop
+
+                            //update mongo for persistence
+
+
+                            userMeals.update({userID: userID}) , {$set: {mealsForTheWeek: []}} , function (err, result) {
+
+                                    console.log(err);
+
+                            }
+
+                            userMeals.update({userID: userID}) , {$set: {mealsForTheWeek : days}} , function (err, result) {
+
+                                console.log(err);
+                            }
+
+
+                            res.send(days);
+
+
+        });
+
+});
+
 app.get("/yelp", function(req, res) {
     console.log("in/yelpget");
     // console.log("-------------------------")
