@@ -334,7 +334,7 @@ app.post("/localuser", function(req, res){
   // res.send(myreq);
 });
 
-app.post("/user/" , function (req, res) {
+app.post("/user/:id?" , function (req, res) {
 
 var userID = "114370910443928643459";
 
