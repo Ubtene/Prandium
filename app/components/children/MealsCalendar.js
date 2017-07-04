@@ -1,7 +1,8 @@
 import React from "react";
 import Day from './Day.js';
 import Yelp from './Yelp';
-import ExpandedMeal from './ExpandedMeal';
+// import ExpandedMeal from './ExpandedMeal';
+const MyModal = require('./Modal');
 
     const week = [
       {
@@ -121,45 +122,22 @@ class MealsCalendar extends React.Component {
 
 
     this.createDay = this.createDay.bind(this);
-    // this.dothings = this.dothings.bind(this);
+
   }
 
-dothings(event, item){
-  event.preventDefault();
-  this.setState({
-    myMeal: item,
-    count: 1
-  })
-
-}
 
 
 
 
 
-handleClick(item){
 
-this.dothings(event, item).then(function(){
-    this.props.getMyMeal(this.state.myMeal.dayName, this.state.myMeal.meals.dinner, this.state.myMeal.ingredients.ingredientsImg, this.state.myMeal.ingredients.instructions);
-
-}.bind(this))
-
-
-}
-
-componentDidUpdate(){
-
-
-
-}
 
 
   createDay() {
     
 
    return week.map((day, i) => {
-            this.handleClick = this.handleClick.bind(this);
-            this.dothings = this.dothings.bind(this);
+
        return (
           <div key={i} className="col-sm-3" onClick={()=> this.props.getMyMeal(day.dayName, day.meals.lunch, day.ingredients.ingredientsImg, day.ingredients.ingredients)}>
           <Day
@@ -181,6 +159,10 @@ componentDidUpdate(){
   render() {
     return (
       <div className="calendar-wrapper">
+
+          <div className="row">
+           <MyModal  meal={this.props.meal} show={this.props.show} hideModal={this.props.hideModal}/>
+          </div>
           <div className="row">
             {this.createDay()}
           </div>
