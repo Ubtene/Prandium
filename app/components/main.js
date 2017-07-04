@@ -86,15 +86,7 @@ componentDidUpdate(){
       */}
 
       <div className="row">
-      {this.state.isLoggedIn ? <MyModal meal={this.state.meal} show={this.state.show} hideModal={this.hideModal}/> : <Empty /> }
-
-    {this.state.day}<br/>
-    {this.state.meal}<br/>
-    {this.state.instructions}
-      </div>
-
-      <div className="row">
-      {this.state.isLoggedIn ? <CentralPage getMyMeal={this.getMyMeal} />  : <MainLogin userLogin={this.userLogin} />}
+      {this.state.isLoggedIn ? <CentralPage getMyMeal={this.getMyMeal} meal={this.state.meal} show={this.state.show} hideModal={this.hideModal}/>  : <MainLogin userLogin={this.userLogin} />}
       </div>
 
 

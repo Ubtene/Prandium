@@ -1,3 +1,6 @@
+{/*This component has the modal and gets props from the active meal to get the div to open the modal with no button I passed the show state from here to the main component*/}
+
+
 const React = require('react');
 import { Button, Modal, ButtonToolbar  } from 'react-bootstrap';
 

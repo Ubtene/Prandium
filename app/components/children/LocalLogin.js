@@ -1,3 +1,6 @@
+// THIS COMPONENT IS FOR A LOCAL SIGNUP OPTION, TAKES IN USER INFO AND SENDS TO SERVER VIA AXIOS
+
+
 const React = require('react');
 const helpers = require('./../utils/helpers.js')
 
