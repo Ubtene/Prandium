@@ -15,7 +15,7 @@ class CentralPage extends React.Component {
     render() {
         return (
             <div className='central-page'>
-                {!this.state.hasMeals? <MealsCalendar getMyMeal={this.props.getMyMeal} meal={this.props.meal} show={this.props.show} hideModal={this.props.hideModal} /> : <DaySelection /> }
+              { !this.state.hasMeals ? <MealsCalendar getMyMeal={ this.props.getMyMeal } meal={ this.props.meal } show={ this.props.show } hideModal={ this.props.hideModal } /> : <DaySelection /> }
             </div>
         )
     }
@@ -24,4 +24,4 @@ class CentralPage extends React.Component {
 
 export default CentralPage;
 
- // meal={this.state.meal} show={this.state.show} hideModal={this.hideModal}
+// meal={this.state.meal} show={this.state.show} hideModal={this.hideModal}
